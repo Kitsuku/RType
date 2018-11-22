@@ -14,8 +14,8 @@ Transform::Transform()
 {
 }
 
-Transform::Transform(const Vector &pos, const Vector &rota,
-const Vector &scale)
+Transform::Transform(const Engine::Vector &pos, const Engine::Vector &rota,
+const Engine::Vector &scale)
 : _position(pos), _rotation(rota), _scale(scale)
 {
 }
@@ -43,12 +43,12 @@ const Engine::Vector	&Transform::getScale() const noexcept
 }
 
 // Method
-void	Transform::move(const Vector &translation) noexcept
+void	Transform::move(const Engine::Vector &translation) noexcept
 {
 	_position += translation;
 }
 
-void	Transform::rotate(const Vector &rotation) noexcept
+void	Transform::rotate(const Engine::Vector &rotation) noexcept
 {
 	_rotation += rotation;
 }

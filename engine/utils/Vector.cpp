@@ -23,12 +23,14 @@ const Vector &Vector::operator+=(const Vector &other) noexcept
 {
         _x += other.getX();
         _y += other.getY();
+		return *this;
 }
 
 const Vector &Vector::operator=(const Vector &other) noexcept
 {
         _x = other.getX();
         _y = other.getY();
+		return other;
 }
 
 // Setter

@@ -1,10 +1,10 @@
 [settings]
     arch=x86_64
     build_type=Release
-    compiler=gcc
-    compiler.libcxx=libstdc++11
-    compiler.version=8
-    os=Linux
+    compiler=Visual Studio
+    compiler.runtime=MD
+    compiler.version=15
+    os=Windows
 
 [requires]
     Poco/1.Y.Z
@@ -18,19 +18,19 @@
     arch=x86_64
     arch_build=x86_64
     build_type=Release
-    compiler=gcc
-    compiler.libcxx=libstdc++11
-    compiler.version=8
-    os=Linux
-    os_build=Linux
+    compiler=Visual Studio
+    compiler.runtime=MD
+    compiler.version=15
+    os=Windows
+    os_build=Windows
 
 [full_requires]
-    OpenSSL/1.0.2o@conan/stable:35ea421ef4c1d32898da44c28e3cc900bc6459dc
-    Poco/1.9.0@pocoproject/stable:67516f54281f3227d74b2b66f92537d98ff1103d
-    boost/1.68.0@conan/stable:233b338bb25e11a5779f1fc0340b9da1fe3ec240
-    bzip2/1.0.6@conan/stable:1d877a3df840030e6a8abb74c5ffb9088d08b47a
-    sfml/2.5.1@bincrafters/stable:56e0cf6d16ee57367a0661ab743f4e43b29223f8
-    zlib/1.2.11@conan/stable:1d877a3df840030e6a8abb74c5ffb9088d08b47a
+    OpenSSL/1.0.2o@conan/stable:606fdb601e335c2001bdf31d478826b644747077
+    Poco/1.9.0@pocoproject/stable:09378ed7f51185386e9f04b212b79fe2d12d005c
+    boost/1.68.0@conan/stable:29929b1deba07f613f7ddc25c0baf4d5a409487d
+    bzip2/1.0.6@conan/stable:6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7
+    sfml/2.5.1@bincrafters/stable:6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7
+    zlib/1.2.11@conan/stable:6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7
 
 [full_options]
     OpenSSL:386=False
@@ -75,11 +75,9 @@
     Poco:enable_util=True
     Poco:enable_xml=True
     Poco:enable_zip=True
-    Poco:fPIC=True
     Poco:force_openssl=True
     Poco:poco_unbundled=False
     Poco:shared=False
-    boost:fPIC=True
     boost:header_only=False
     boost:magic_autolink=False
     boost:shared=True
@@ -114,15 +112,12 @@
     boost:without_timer=False
     boost:without_type_erasure=False
     boost:without_wave=False
-    bzip2:fPIC=True
     bzip2:shared=False
     sfml:audio=False
-    sfml:fPIC=True
     sfml:graphics=False
     sfml:network=False
     sfml:shared=False
     sfml:window=False
-    zlib:fPIC=True
     zlib:minizip=False
     zlib:shared=False
 

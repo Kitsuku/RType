@@ -3,13 +3,13 @@ project(RType)
 
 add_definitions("-std=c++11")
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+include(build/conanbuildinfo.cmake)
 conan_basic_setup()
 
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/engine
-			$(CMAKE_CURRENT_SOURCE_DIR)/include/engine/component
-			$(CMAKE_CURRENT_SOURCE_DIR)/include/engine/utils)
+			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/component
+			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/utils)
 set(CMAKE_CXX_FLAGS "-lsfml-graphics -lsfml-window -lsfml-system -I include/engine -I include/engine/component -I include/engine/utils")
 add_library(engine STATIC engine/GameEngine.cpp
 			       engine/Renderer.cpp
