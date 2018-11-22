@@ -1,0 +1,14 @@
+[requires]
+Poco/1.9.0@pocoproject/stable
+sfml/2.5.1@bincrafters/stable
+boost/1.68.0@conan/stable
+
+[options]
+boost:shared=True
+
+[generators]
+cmake
+
+[imports]
+bin, *.dll -> ./bin
+lib, *.dylib* -> ./bin
