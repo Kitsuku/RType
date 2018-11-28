@@ -1,56 +1,50 @@
 [includedirs]
-C:/Users/53983/.conan/data/Poco/1.9.0/pocoproject/stable/package/09378ed7f51185386e9f04b212b79fe2d12d005c/include
-C:/Users/53983/.conan/data/sfml/2.5.1/bincrafters/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/include
-C:/.conan/7uunjfft/1/include
-C:/Users/53983/.conan/data/OpenSSL/1.0.2o/conan/stable/package/606fdb601e335c2001bdf31d478826b644747077/include
-C:/Users/53983/.conan/data/bzip2/1.0.6/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/include
-C:/Users/53983/.conan/data/zlib/1.2.11/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/include
+/home/joris/.conan/data/Poco/1.9.0/pocoproject/stable/package/67516f54281f3227d74b2b66f92537d98ff1103d/include
+/home/joris/.conan/data/sfml/2.5.1/bincrafters/stable/package/56e0cf6d16ee57367a0661ab743f4e43b29223f8/include
+/home/joris/.conan/data/boost/1.68.0/conan/stable/package/233b338bb25e11a5779f1fc0340b9da1fe3ec240/include
+/home/joris/.conan/data/OpenSSL/1.0.2o/conan/stable/package/35ea421ef4c1d32898da44c28e3cc900bc6459dc/include
+/home/joris/.conan/data/bzip2/1.0.6/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/include
+/home/joris/.conan/data/zlib/1.2.11/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/include
 
 [libdirs]
-C:/Users/53983/.conan/data/Poco/1.9.0/pocoproject/stable/package/09378ed7f51185386e9f04b212b79fe2d12d005c/lib
-C:/Users/53983/.conan/data/sfml/2.5.1/bincrafters/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/lib
-C:/.conan/7uunjfft/1/lib
-C:/Users/53983/.conan/data/OpenSSL/1.0.2o/conan/stable/package/606fdb601e335c2001bdf31d478826b644747077/lib
-C:/Users/53983/.conan/data/bzip2/1.0.6/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/lib
-C:/Users/53983/.conan/data/zlib/1.2.11/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/lib
+/home/joris/.conan/data/Poco/1.9.0/pocoproject/stable/package/67516f54281f3227d74b2b66f92537d98ff1103d/lib
+/home/joris/.conan/data/sfml/2.5.1/bincrafters/stable/package/56e0cf6d16ee57367a0661ab743f4e43b29223f8/lib
+/home/joris/.conan/data/boost/1.68.0/conan/stable/package/233b338bb25e11a5779f1fc0340b9da1fe3ec240/lib
+/home/joris/.conan/data/OpenSSL/1.0.2o/conan/stable/package/35ea421ef4c1d32898da44c28e3cc900bc6459dc/lib
+/home/joris/.conan/data/bzip2/1.0.6/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/lib
+/home/joris/.conan/data/zlib/1.2.11/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/lib
 
 [bindirs]
-C:/Users/53983/.conan/data/sfml/2.5.1/bincrafters/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/bin
-C:/.conan/7uunjfft/1/bin
-C:/Users/53983/.conan/data/bzip2/1.0.6/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/bin
+/home/joris/.conan/data/bzip2/1.0.6/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/bin
 
 [resdirs]
 
 
 [builddirs]
-C:/Users/53983/.conan/data/Poco/1.9.0/pocoproject/stable/package/09378ed7f51185386e9f04b212b79fe2d12d005c/
-C:/Users/53983/.conan/data/sfml/2.5.1/bincrafters/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/
-C:/.conan/7uunjfft/1/
-C:/Users/53983/.conan/data/OpenSSL/1.0.2o/conan/stable/package/606fdb601e335c2001bdf31d478826b644747077/
-C:/Users/53983/.conan/data/bzip2/1.0.6/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/
-C:/Users/53983/.conan/data/zlib/1.2.11/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/
+/home/joris/.conan/data/Poco/1.9.0/pocoproject/stable/package/67516f54281f3227d74b2b66f92537d98ff1103d/
+/home/joris/.conan/data/sfml/2.5.1/bincrafters/stable/package/56e0cf6d16ee57367a0661ab743f4e43b29223f8/
+/home/joris/.conan/data/boost/1.68.0/conan/stable/package/233b338bb25e11a5779f1fc0340b9da1fe3ec240/
+/home/joris/.conan/data/OpenSSL/1.0.2o/conan/stable/package/35ea421ef4c1d32898da44c28e3cc900bc6459dc/
+/home/joris/.conan/data/bzip2/1.0.6/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/
+/home/joris/.conan/data/zlib/1.2.11/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/
 
 [libs]
-PocoMongoDBmd
-PocoNetmd
-PocoNetSSLWinmd
-PocoCryptomd
-PocoDatamd
-PocoDataSQLitemd
-PocoZipmd
-PocoUtilmd
-PocoXMLmd
-PocoJSONmd
-PocoFoundationmd
-Iphlpapi.lib
-Crypt32.lib
-sfml-main
+PocoMongoDB
+PocoNet
+PocoNetSSL
+PocoCrypto
+PocoData
+PocoDataSQLite
+PocoZip
+PocoUtil
+PocoXML
+PocoJSON
+PocoFoundation
+rt
 sfml-system-s
-winmm
 boost_wave
 boost_container
 boost_contract
-boost_exception
 boost_graph
 boost_iostreams
 boost_locale
@@ -58,46 +52,41 @@ boost_log
 boost_program_options
 boost_random
 boost_regex
-boost_serialization
 boost_wserialization
+boost_serialization
 boost_signals
 boost_coroutine
 boost_fiber
 boost_context
 boost_timer
-libboost_timer-vc141-mt-x64-1_68
 boost_thread
 boost_chrono
-libboost_chrono-vc141-mt-x64-1_68
 boost_date_time
 boost_atomic
 boost_filesystem
 boost_system
-libboost_system-vc141-mt-x64-1_68
 boost_type_erasure
+boost_stacktrace_addr2line
+boost_stacktrace_noop
 boost_log_setup
 boost_math_c99
+boost_stacktrace_backtrace
+boost_math_tr1f
 boost_math_c99f
 boost_math_c99l
-boost_math_tr1
-boost_math_tr1f
 boost_math_tr1l
-boost_stacktrace_noop
-boost_stacktrace_windbg
-boost_stacktrace_windbg_cached
+boost_math_tr1
 boost_unit_test_framework
-ssleay32
-libeay32
-crypt32
-msi
-ws2_32
+boost_stacktrace_basic
+pthread
+ssl
+crypto
+dl
 bz2
-zlib
+z
 
 [defines]
 BOOST_ALL_DYN_LINK
-BOOST_ALL_NO_LIB
-BOOST_UUID_FORCE_AUTO_LINK
 SFML_STATIC
 POCO_STATIC=ON
 POCO_NO_AUTOMATIC_LIBS
@@ -119,10 +108,10 @@ POCO_NO_AUTOMATIC_LIBS
 
 
 [includedirs_Poco]
-C:/Users/53983/.conan/data/Poco/1.9.0/pocoproject/stable/package/09378ed7f51185386e9f04b212b79fe2d12d005c/include
+/home/joris/.conan/data/Poco/1.9.0/pocoproject/stable/package/67516f54281f3227d74b2b66f92537d98ff1103d/include
 
 [libdirs_Poco]
-C:/Users/53983/.conan/data/Poco/1.9.0/pocoproject/stable/package/09378ed7f51185386e9f04b212b79fe2d12d005c/lib
+/home/joris/.conan/data/Poco/1.9.0/pocoproject/stable/package/67516f54281f3227d74b2b66f92537d98ff1103d/lib
 
 [bindirs_Poco]
 
@@ -131,23 +120,23 @@ C:/Users/53983/.conan/data/Poco/1.9.0/pocoproject/stable/package/09378ed7f511853
 
 
 [builddirs_Poco]
-C:/Users/53983/.conan/data/Poco/1.9.0/pocoproject/stable/package/09378ed7f51185386e9f04b212b79fe2d12d005c/
+/home/joris/.conan/data/Poco/1.9.0/pocoproject/stable/package/67516f54281f3227d74b2b66f92537d98ff1103d/
 
 [libs_Poco]
-PocoMongoDBmd
-PocoNetmd
-PocoNetSSLWinmd
-PocoCryptomd
-PocoDatamd
-PocoDataSQLitemd
-PocoZipmd
-PocoUtilmd
-PocoXMLmd
-PocoJSONmd
-PocoFoundationmd
-ws2_32
-Iphlpapi.lib
-Crypt32.lib
+PocoMongoDB
+PocoNet
+PocoNetSSL
+PocoCrypto
+PocoData
+PocoDataSQLite
+PocoZip
+PocoUtil
+PocoXML
+PocoJSON
+PocoFoundation
+pthread
+dl
+rt
 
 [defines_Poco]
 POCO_STATIC=ON
@@ -169,28 +158,26 @@ POCO_NO_AUTOMATIC_LIBS
 
 
 [rootpath_Poco]
-C:/Users/53983/.conan/data/Poco/1.9.0/pocoproject/stable/package/09378ed7f51185386e9f04b212b79fe2d12d005c
+/home/joris/.conan/data/Poco/1.9.0/pocoproject/stable/package/67516f54281f3227d74b2b66f92537d98ff1103d
 
 
 [includedirs_sfml]
-C:/Users/53983/.conan/data/sfml/2.5.1/bincrafters/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/include
+/home/joris/.conan/data/sfml/2.5.1/bincrafters/stable/package/56e0cf6d16ee57367a0661ab743f4e43b29223f8/include
 
 [libdirs_sfml]
-C:/Users/53983/.conan/data/sfml/2.5.1/bincrafters/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/lib
+/home/joris/.conan/data/sfml/2.5.1/bincrafters/stable/package/56e0cf6d16ee57367a0661ab743f4e43b29223f8/lib
 
 [bindirs_sfml]
-C:/Users/53983/.conan/data/sfml/2.5.1/bincrafters/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/bin
+
 
 [resdirs_sfml]
 
 
 [builddirs_sfml]
-C:/Users/53983/.conan/data/sfml/2.5.1/bincrafters/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/
+/home/joris/.conan/data/sfml/2.5.1/bincrafters/stable/package/56e0cf6d16ee57367a0661ab743f4e43b29223f8/
 
 [libs_sfml]
-sfml-main
 sfml-system-s
-winmm
 
 [defines_sfml]
 SFML_STATIC
@@ -211,29 +198,28 @@ SFML_STATIC
 
 
 [rootpath_sfml]
-C:/Users/53983/.conan/data/sfml/2.5.1/bincrafters/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7
+/home/joris/.conan/data/sfml/2.5.1/bincrafters/stable/package/56e0cf6d16ee57367a0661ab743f4e43b29223f8
 
 
 [includedirs_boost]
-C:/.conan/7uunjfft/1/include
+/home/joris/.conan/data/boost/1.68.0/conan/stable/package/233b338bb25e11a5779f1fc0340b9da1fe3ec240/include
 
 [libdirs_boost]
-C:/.conan/7uunjfft/1/lib
+/home/joris/.conan/data/boost/1.68.0/conan/stable/package/233b338bb25e11a5779f1fc0340b9da1fe3ec240/lib
 
 [bindirs_boost]
-C:/.conan/7uunjfft/1/bin
+
 
 [resdirs_boost]
 
 
 [builddirs_boost]
-C:/.conan/7uunjfft/1/
+/home/joris/.conan/data/boost/1.68.0/conan/stable/package/233b338bb25e11a5779f1fc0340b9da1fe3ec240/
 
 [libs_boost]
 boost_wave
 boost_container
 boost_contract
-boost_exception
 boost_graph
 boost_iostreams
 boost_locale
@@ -241,39 +227,36 @@ boost_log
 boost_program_options
 boost_random
 boost_regex
-boost_serialization
 boost_wserialization
+boost_serialization
 boost_signals
 boost_coroutine
 boost_fiber
 boost_context
 boost_timer
-libboost_timer-vc141-mt-x64-1_68
 boost_thread
 boost_chrono
-libboost_chrono-vc141-mt-x64-1_68
 boost_date_time
 boost_atomic
 boost_filesystem
 boost_system
-libboost_system-vc141-mt-x64-1_68
 boost_type_erasure
+boost_stacktrace_addr2line
+boost_stacktrace_noop
 boost_log_setup
 boost_math_c99
+boost_stacktrace_backtrace
+boost_math_tr1f
 boost_math_c99f
 boost_math_c99l
-boost_math_tr1
-boost_math_tr1f
 boost_math_tr1l
-boost_stacktrace_noop
-boost_stacktrace_windbg
-boost_stacktrace_windbg_cached
+boost_math_tr1
 boost_unit_test_framework
+boost_stacktrace_basic
+pthread
 
 [defines_boost]
 BOOST_ALL_DYN_LINK
-BOOST_ALL_NO_LIB
-BOOST_UUID_FORCE_AUTO_LINK
 
 [cppflags_boost]
 
@@ -291,14 +274,14 @@ BOOST_UUID_FORCE_AUTO_LINK
 
 
 [rootpath_boost]
-C:/.conan/7uunjfft/1
+/home/joris/.conan/data/boost/1.68.0/conan/stable/package/233b338bb25e11a5779f1fc0340b9da1fe3ec240
 
 
 [includedirs_OpenSSL]
-C:/Users/53983/.conan/data/OpenSSL/1.0.2o/conan/stable/package/606fdb601e335c2001bdf31d478826b644747077/include
+/home/joris/.conan/data/OpenSSL/1.0.2o/conan/stable/package/35ea421ef4c1d32898da44c28e3cc900bc6459dc/include
 
 [libdirs_OpenSSL]
-C:/Users/53983/.conan/data/OpenSSL/1.0.2o/conan/stable/package/606fdb601e335c2001bdf31d478826b644747077/lib
+/home/joris/.conan/data/OpenSSL/1.0.2o/conan/stable/package/35ea421ef4c1d32898da44c28e3cc900bc6459dc/lib
 
 [bindirs_OpenSSL]
 
@@ -307,14 +290,12 @@ C:/Users/53983/.conan/data/OpenSSL/1.0.2o/conan/stable/package/606fdb601e335c200
 
 
 [builddirs_OpenSSL]
-C:/Users/53983/.conan/data/OpenSSL/1.0.2o/conan/stable/package/606fdb601e335c2001bdf31d478826b644747077/
+/home/joris/.conan/data/OpenSSL/1.0.2o/conan/stable/package/35ea421ef4c1d32898da44c28e3cc900bc6459dc/
 
 [libs_OpenSSL]
-ssleay32
-libeay32
-crypt32
-msi
-ws2_32
+ssl
+crypto
+dl
 
 [defines_OpenSSL]
 
@@ -335,23 +316,23 @@ ws2_32
 
 
 [rootpath_OpenSSL]
-C:/Users/53983/.conan/data/OpenSSL/1.0.2o/conan/stable/package/606fdb601e335c2001bdf31d478826b644747077
+/home/joris/.conan/data/OpenSSL/1.0.2o/conan/stable/package/35ea421ef4c1d32898da44c28e3cc900bc6459dc
 
 
 [includedirs_bzip2]
-C:/Users/53983/.conan/data/bzip2/1.0.6/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/include
+/home/joris/.conan/data/bzip2/1.0.6/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/include
 
 [libdirs_bzip2]
-C:/Users/53983/.conan/data/bzip2/1.0.6/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/lib
+/home/joris/.conan/data/bzip2/1.0.6/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/lib
 
 [bindirs_bzip2]
-C:/Users/53983/.conan/data/bzip2/1.0.6/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/bin
+/home/joris/.conan/data/bzip2/1.0.6/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/bin
 
 [resdirs_bzip2]
 
 
 [builddirs_bzip2]
-C:/Users/53983/.conan/data/bzip2/1.0.6/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/
+/home/joris/.conan/data/bzip2/1.0.6/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/
 
 [libs_bzip2]
 bz2
@@ -375,14 +356,14 @@ bz2
 
 
 [rootpath_bzip2]
-C:/Users/53983/.conan/data/bzip2/1.0.6/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7
+/home/joris/.conan/data/bzip2/1.0.6/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a
 
 
 [includedirs_zlib]
-C:/Users/53983/.conan/data/zlib/1.2.11/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/include
+/home/joris/.conan/data/zlib/1.2.11/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/include
 
 [libdirs_zlib]
-C:/Users/53983/.conan/data/zlib/1.2.11/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/lib
+/home/joris/.conan/data/zlib/1.2.11/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/lib
 
 [bindirs_zlib]
 
@@ -391,10 +372,10 @@ C:/Users/53983/.conan/data/zlib/1.2.11/conan/stable/package/6cc50b139b9c3d27b3e9
 
 
 [builddirs_zlib]
-C:/Users/53983/.conan/data/zlib/1.2.11/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7/
+/home/joris/.conan/data/zlib/1.2.11/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/
 
 [libs_zlib]
-zlib
+z
 
 [defines_zlib]
 
@@ -415,19 +396,19 @@ zlib
 
 
 [rootpath_zlib]
-C:/Users/53983/.conan/data/zlib/1.2.11/conan/stable/package/6cc50b139b9c3d27b3e9042d5f5372d327b3a9f7
+/home/joris/.conan/data/zlib/1.2.11/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a
 
 
+[USER_bzip2]
+[USER_zlib]
+[USER_OpenSSL]
 [USER_Poco]
 [USER_sfml]
 [USER_boost]
-[USER_OpenSSL]
-[USER_bzip2]
-[USER_zlib]
 [ENV_Poco]
 [ENV_sfml]
 [ENV_boost]
-BOOST_ROOT=C:\.conan\7uunjfft\1
+BOOST_ROOT=/home/joris/.conan/data/boost/1.68.0/conan/stable/package/233b338bb25e11a5779f1fc0340b9da1fe3ec240
 [ENV_OpenSSL]
 [ENV_bzip2]
 [ENV_zlib]

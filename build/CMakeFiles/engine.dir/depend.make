@@ -8,9 +8,15 @@ CMakeFiles/engine.dir/engine/Renderer.cpp.o: ../include/engine/Renderer.hpp
 CMakeFiles/engine.dir/engine/Renderer.cpp.o: ../engine/Renderer.cpp
 
 CMakeFiles/engine.dir/engine/Transform.cpp.o: ../include/engine/Transform.hpp
+CMakeFiles/engine.dir/engine/Transform.cpp.o: ../include/engine/utils/Vector.hpp
 CMakeFiles/engine.dir/engine/Transform.cpp.o: ../engine/Transform.cpp
 
+CMakeFiles/engine.dir/engine/component/AComponent.cpp.o: ../include/engine/GameEngine.hpp
+CMakeFiles/engine.dir/engine/component/AComponent.cpp.o: ../include/engine/Transform.hpp
+CMakeFiles/engine.dir/engine/component/AComponent.cpp.o: ../include/engine/component/AComponent.hpp
+CMakeFiles/engine.dir/engine/component/AComponent.cpp.o: ../include/engine/utils/Vector.hpp
 CMakeFiles/engine.dir/engine/component/AComponent.cpp.o: ../engine/component/AComponent.cpp
 
+CMakeFiles/engine.dir/engine/utils/Vector.cpp.o: ../include/engine/utils/Vector.hpp
 CMakeFiles/engine.dir/engine/utils/Vector.cpp.o: ../engine/utils/Vector.cpp
 

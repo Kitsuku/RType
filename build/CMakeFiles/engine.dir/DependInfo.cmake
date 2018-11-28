@@ -21,8 +21,9 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/home/joris/.conan/data/bzip2/1.0.6/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/include"
   "/home/joris/.conan/data/zlib/1.2.11/conan/stable/package/1d877a3df840030e6a8abb74c5ffb9088d08b47a/include"
   "../include/engine"
-  "../$(CMAKE_CURRENT_SOURCE_DIR)/include/engine/component"
-  "../$(CMAKE_CURRENT_SOURCE_DIR)/include/engine/utils"
+  "../include/engine/component"
+  "../include/engine/utils"
+  "../include/server"
   )
 
 # Targets to which this target links.

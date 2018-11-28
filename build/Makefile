@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named rtype-server
+
+# Build rule for target.
+rtype-server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rtype-server
+.PHONY : rtype-server
+
+# fast build rule for target.
+rtype-server/fast:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/build
+.PHONY : rtype-server/fast
+
+#=============================================================================
 # Target rules for targets named engine
 
 # Build rule for target.
@@ -298,6 +311,141 @@ source/Main.cpp.s:
 	$(MAKE) -f CMakeFiles/rtype-client.dir/build.make CMakeFiles/rtype-client.dir/source/Main.cpp.s
 .PHONY : source/Main.cpp.s
 
+source/server/Client.o: source/server/Client.cpp.o
+
+.PHONY : source/server/Client.o
+
+# target to build an object file
+source/server/Client.cpp.o:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/Client.cpp.o
+.PHONY : source/server/Client.cpp.o
+
+source/server/Client.i: source/server/Client.cpp.i
+
+.PHONY : source/server/Client.i
+
+# target to preprocess a source file
+source/server/Client.cpp.i:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/Client.cpp.i
+.PHONY : source/server/Client.cpp.i
+
+source/server/Client.s: source/server/Client.cpp.s
+
+.PHONY : source/server/Client.s
+
+# target to generate assembly for a file
+source/server/Client.cpp.s:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/Client.cpp.s
+.PHONY : source/server/Client.cpp.s
+
+source/server/ClientManager.o: source/server/ClientManager.cpp.o
+
+.PHONY : source/server/ClientManager.o
+
+# target to build an object file
+source/server/ClientManager.cpp.o:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/ClientManager.cpp.o
+.PHONY : source/server/ClientManager.cpp.o
+
+source/server/ClientManager.i: source/server/ClientManager.cpp.i
+
+.PHONY : source/server/ClientManager.i
+
+# target to preprocess a source file
+source/server/ClientManager.cpp.i:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/ClientManager.cpp.i
+.PHONY : source/server/ClientManager.cpp.i
+
+source/server/ClientManager.s: source/server/ClientManager.cpp.s
+
+.PHONY : source/server/ClientManager.s
+
+# target to generate assembly for a file
+source/server/ClientManager.cpp.s:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/ClientManager.cpp.s
+.PHONY : source/server/ClientManager.cpp.s
+
+source/server/Lobby.o: source/server/Lobby.cpp.o
+
+.PHONY : source/server/Lobby.o
+
+# target to build an object file
+source/server/Lobby.cpp.o:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/Lobby.cpp.o
+.PHONY : source/server/Lobby.cpp.o
+
+source/server/Lobby.i: source/server/Lobby.cpp.i
+
+.PHONY : source/server/Lobby.i
+
+# target to preprocess a source file
+source/server/Lobby.cpp.i:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/Lobby.cpp.i
+.PHONY : source/server/Lobby.cpp.i
+
+source/server/Lobby.s: source/server/Lobby.cpp.s
+
+.PHONY : source/server/Lobby.s
+
+# target to generate assembly for a file
+source/server/Lobby.cpp.s:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/Lobby.cpp.s
+.PHONY : source/server/Lobby.cpp.s
+
+source/server/Main.o: source/server/Main.cpp.o
+
+.PHONY : source/server/Main.o
+
+# target to build an object file
+source/server/Main.cpp.o:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/Main.cpp.o
+.PHONY : source/server/Main.cpp.o
+
+source/server/Main.i: source/server/Main.cpp.i
+
+.PHONY : source/server/Main.i
+
+# target to preprocess a source file
+source/server/Main.cpp.i:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/Main.cpp.i
+.PHONY : source/server/Main.cpp.i
+
+source/server/Main.s: source/server/Main.cpp.s
+
+.PHONY : source/server/Main.s
+
+# target to generate assembly for a file
+source/server/Main.cpp.s:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/Main.cpp.s
+.PHONY : source/server/Main.cpp.s
+
+source/server/UdpServer.o: source/server/UdpServer.cpp.o
+
+.PHONY : source/server/UdpServer.o
+
+# target to build an object file
+source/server/UdpServer.cpp.o:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/UdpServer.cpp.o
+.PHONY : source/server/UdpServer.cpp.o
+
+source/server/UdpServer.i: source/server/UdpServer.cpp.i
+
+.PHONY : source/server/UdpServer.i
+
+# target to preprocess a source file
+source/server/UdpServer.cpp.i:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/UdpServer.cpp.i
+.PHONY : source/server/UdpServer.cpp.i
+
+source/server/UdpServer.s: source/server/UdpServer.cpp.s
+
+.PHONY : source/server/UdpServer.s
+
+# target to generate assembly for a file
+source/server/UdpServer.cpp.s:
+	$(MAKE) -f CMakeFiles/rtype-server.dir/build.make CMakeFiles/rtype-server.dir/source/server/UdpServer.cpp.s
+.PHONY : source/server/UdpServer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -305,6 +453,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
+	@echo "... rtype-server"
 	@echo "... edit_cache"
 	@echo "... engine"
 	@echo "... rtype-client"
@@ -326,6 +475,21 @@ help:
 	@echo "... source/Main.o"
 	@echo "... source/Main.i"
 	@echo "... source/Main.s"
+	@echo "... source/server/Client.o"
+	@echo "... source/server/Client.i"
+	@echo "... source/server/Client.s"
+	@echo "... source/server/ClientManager.o"
+	@echo "... source/server/ClientManager.i"
+	@echo "... source/server/ClientManager.s"
+	@echo "... source/server/Lobby.o"
+	@echo "... source/server/Lobby.i"
+	@echo "... source/server/Lobby.s"
+	@echo "... source/server/Main.o"
+	@echo "... source/server/Main.i"
+	@echo "... source/server/Main.s"
+	@echo "... source/server/UdpServer.o"
+	@echo "... source/server/UdpServer.i"
+	@echo "... source/server/UdpServer.s"
 .PHONY : help
 
 

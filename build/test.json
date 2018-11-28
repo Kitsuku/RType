@@ -1,0 +1,19 @@
+{
+    "lobbies": [
+        {
+            "lobbyName": "FTK",
+            "clientNb": "1",
+            "level": "3"
+        },
+        {
+            "lobbyName": "Oui",
+            "clientNb": "1",
+            "level": "1"
+        },
+        {
+            "lobbyName": "TOTO",
+            "clientNb": "1",
+            "level": "1"
+        }
+    ]
+}

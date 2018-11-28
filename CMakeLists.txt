@@ -9,8 +9,10 @@ conan_basic_setup()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/engine
 			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/component
-			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/utils)
-set(CMAKE_CXX_FLAGS "-lsfml-graphics -lsfml-window -lsfml-system -I include/engine -I include/engine/component -I include/engine/utils")
+			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/utils
+			${CMAKE_CURRENT_SOURCE_DIR}/include/server)
+set(CMAKE_CXX_FLAGS "-lsfml-graphics -lsfml-window -lsfml-system")
+
 add_library(engine STATIC engine/GameEngine.cpp
 			       engine/Renderer.cpp
 			       engine/Transform.cpp
@@ -19,3 +21,10 @@ add_library(engine STATIC engine/GameEngine.cpp
 
 add_executable(rtype-client source/Main.cpp)
 target_link_libraries(rtype-client ${CONAN_LIBS} engine)
+
+add_executable(rtype-server source/server/Main.cpp
+	source/server/UdpServer.cpp
+	source/server/Client.cpp
+	source/server/ClientManager.cpp
+	source/server/Lobby.cpp)
+target_link_libraries(rtype-server ${CONAN_LIBS} engine)

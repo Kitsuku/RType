@@ -4,7 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/joris/rendu/cpp/CPP_rtype_2018/source/Main.cpp" "/home/joris/rendu/cpp/CPP_rtype_2018/build/CMakeFiles/rtype-client.dir/source/Main.cpp.o"
+  "/home/joris/rendu/cpp/CPP_rtype_2018/source/server/Client.cpp" "/home/joris/rendu/cpp/CPP_rtype_2018/build/CMakeFiles/rtype-server.dir/source/server/Client.cpp.o"
+  "/home/joris/rendu/cpp/CPP_rtype_2018/source/server/ClientManager.cpp" "/home/joris/rendu/cpp/CPP_rtype_2018/build/CMakeFiles/rtype-server.dir/source/server/ClientManager.cpp.o"
+  "/home/joris/rendu/cpp/CPP_rtype_2018/source/server/Lobby.cpp" "/home/joris/rendu/cpp/CPP_rtype_2018/build/CMakeFiles/rtype-server.dir/source/server/Lobby.cpp.o"
+  "/home/joris/rendu/cpp/CPP_rtype_2018/source/server/Main.cpp" "/home/joris/rendu/cpp/CPP_rtype_2018/build/CMakeFiles/rtype-server.dir/source/server/Main.cpp.o"
+  "/home/joris/rendu/cpp/CPP_rtype_2018/source/server/UdpServer.cpp" "/home/joris/rendu/cpp/CPP_rtype_2018/build/CMakeFiles/rtype-server.dir/source/server/UdpServer.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

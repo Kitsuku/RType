@@ -1,2 +1,0 @@
-/usr/bin/ar qc lib/liblibengine.a  CMakeFiles/libengine.dir/engine/GameEngine.cpp.o CMakeFiles/libengine.dir/engine/Renderer.cpp.o CMakeFiles/libengine.dir/engine/Transform.cpp.o CMakeFiles/libengine.dir/engine/component/AComponent.cpp.o CMakeFiles/libengine.dir/engine/utils/Vector.cpp.o
-/usr/bin/ranlib lib/liblibengine.a
