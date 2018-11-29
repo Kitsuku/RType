@@ -1,10 +1,5 @@
 #include <thread>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ini_parser.hpp>
 #include "ClientManager.hpp"
-
-using boost::property_tree::ptree;
 
 ClientManager::ClientManager(UdpServer *udpServer, std::size_t &bytesTransferred)
     : _udpServer(udpServer), _bytesTransferred(bytesTransferred)
@@ -40,12 +35,8 @@ void    ClientManager::initPtr()
 
 void    ClientManager::addClient()
 {
-    std::map<udp::endpoint, Client> clients = _udpServer->getClients();
-
     _udpServer->addClient(Client(_clientEndpoint.address().to_string(), _clientEndpoint.port(), _clientEndpoint));
-    _udpServer->_socket.async_send_to(boost::asio::buffer("Lobbies list\n"), _clientEndpoint,
-    [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
-    });
+    lobbiesInfo();
 }
 
 udp::endpoint   ClientManager::getEndpoint()
@@ -84,21 +75,14 @@ void    ClientManager::manageLobbies()
 void    ClientManager::lobbiesInfo()
 {
     std::map<std::string, Lobby>    lobbies = _udpServer->getLobbies();
-    boost::property_tree::ptree   pt;
-    boost::property_tree::ptree   lobbyInfo;
-    boost::property_tree::ptree   allInfo;
     std::ostringstream  oss(std::ostringstream::ate);
 
+    oss << lobbies.size();
     for (std::map<std::string, Lobby>::iterator it = lobbies.begin();
         it != lobbies.end(); it++) {
-        lobbyInfo.put("lobbyName", it->second.getName());
-        lobbyInfo.put("clientNb", it->second.getNbClients());
-        lobbyInfo.put("level", it->second.getLevel());
-        allInfo.push_back(std::make_pair("", lobbyInfo));
-        lobbyInfo.clear();
+            oss << " " << it->second.getName() << " " << it->second.getNbClients() << " " << it->second.getLevel();
     }
-    pt.add_child("lobbies", allInfo);
-    write_json(oss, pt);
+    oss << std::endl;
     _udpServer->_socket.async_send_to(boost::asio::buffer(oss.str()), _clientEndpoint,
             [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
             });
