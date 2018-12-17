@@ -8,7 +8,7 @@
     class Client {
         public:
             Client();
-            Client(std::string, unsigned short, boost::asio::ip::udp::endpoint);
+            Client(std::string, unsigned short, boost::asio::ip::udp::endpoint, int);
 
             const std::string getAddress() const;
             const unsigned short  getPort() const;
@@ -18,12 +18,15 @@
             boost::asio::ip::udp::endpoint  getEndpoint() const;
             void    setReady(bool);
             bool    getReady() const;
+            int     getId() const;
+            void    setId(int);
         private:
             std::string _address;
             unsigned short  _port;
             std::string _message;
             boost::asio::ip::udp::endpoint    _endpoint;
             bool    _isReady = false;
+            int     _id;
     };
 
 #endif

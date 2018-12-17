@@ -13,6 +13,10 @@
 	#include <boost/asio.hpp>
 	#include "Client.hpp"
 	#include "Lobby.hpp"
+	#include "Game.hpp"
+	#include "ScriptObject.hpp"
+	#include "SceneApparition.hpp"
+	#include "GameEngine.hpp"
 
 	using boost::asio::ip::udp;
 
@@ -33,17 +37,39 @@
 		void	addClientInLobby(std::string, udp::endpoint);
 		Lobby	getClientLobby();
 		void	changeClientStatus(bool);
+		int		getClientId() const;
+		void	incrClientId();
+		bool	clientsAreReady();
+
+		// Game Management
+		void	addGame();
+		void	gameManagement();
+		void	deleteLobby(std::string);
+		void	moveComponents();
+		void	catchPlayerMovement();
+
+		// Temp
+
+		void	setActor(std::ostream &stream, const std::vector<std::string> &path);
+		void	appear(std::ostream &s, Engine::SceneApparition &app,
+			Engine::ScriptObject *so = nullptr);
 
 		udp::socket _socket;
+		udp::socket	_gameSocket;
 
 	private:
 		void startReceive();
 
-		udp::endpoint _remoteEndpoint;
+		udp::endpoint	_remoteEndpoint;
+		udp::endpoint	_gameRemoteEndpoint;
 		char _buffer[1000];
+		char	_gameBuffer[1000];
 		std::map<udp::endpoint, Client>	_clients;
-		std::mutex _lock;
+		std::mutex	_lock;
+		std::mutex	_gameLock;
 		std::map<std::string, Lobby>	_lobbies;
+		std::vector<Game>	_games;
+		int	_clientId = 0;
 	};
 
 #endif /* UDPSERVER_HPP */

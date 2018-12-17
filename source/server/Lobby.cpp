@@ -6,8 +6,8 @@ Lobby::Lobby()
 {
 }
 
-Lobby::Lobby(std::string name, Client master, int level) 
-    : _name(name), _level(level)
+Lobby::Lobby(std::string name, Client master, int level, int maxPlace) 
+    : _name(name), _level(level), _maxPlace(maxPlace)
 {
     _clientsInLobby.push_back(master);
     _master = master;
@@ -19,6 +19,11 @@ std::string Lobby::getName() const
 }
 
 std::vector<Client> Lobby::getClients() const
+{
+    return _clientsInLobby;
+}
+
+std::vector<Client> Lobby::getClientsForGame()
 {
     return _clientsInLobby;
 }
@@ -64,4 +69,9 @@ void    Lobby::setClientReady(udp::endpoint clientEndpoint, bool status)
 int Lobby::getLevel() const
 {
     return _level;
+}
+
+int Lobby::getMaxPlace() const
+{
+    return _maxPlace;
 }

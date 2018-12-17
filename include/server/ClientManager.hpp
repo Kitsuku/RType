@@ -22,6 +22,8 @@
     int     clientsInLobby(std::string);
     bool    isClientInLobby();
     Lobby   getClientLobby();
+    void    sendMessageInLobby(std::string);
+    void    getClientsInLobbyInformations(std::string &);
 
     // Ptr functions
     void    lobbiesInfo();

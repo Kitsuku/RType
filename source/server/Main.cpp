@@ -7,7 +7,9 @@ int main()
   try
   {
     boost::asio::io_service io_service;
+  
     UdpServer server(io_service);
+    io_service.poll_one();
     io_service.run();
   }
   catch (std::exception& e)

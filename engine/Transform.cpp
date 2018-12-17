@@ -5,6 +5,7 @@
 // Transform
 //
 
+#include <iomanip>
 #include "Transform.hpp"
 
 using Engine::Transform;
@@ -51,4 +52,23 @@ void	Transform::move(const Engine::Vector &translation) noexcept
 void	Transform::rotate(const Engine::Vector &rotation) noexcept
 {
 	_rotation += rotation;
+}
+
+void	Transform::place(const Engine::Vector &position) noexcept
+{
+	_position = position;
+}
+
+// Extern operator
+std::ostream	&operator<<(std::ostream &stream,
+			const Transform &target) noexcept
+{
+	stream << std::fixed << std::setprecision(5);
+	stream << "Position: " << target.getPosition();
+	if (!target.getRotation().isNull())
+		stream << " Rotation: " << target.getRotation();
+	if (target.getScale() != Engine::Vector(1.0, 1.0))
+		stream << " Scale: " << target.getScale();
+	stream << std::defaultfloat;
+	return stream;
 }

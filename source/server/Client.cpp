@@ -7,8 +7,8 @@ Client::Client()
 {
 }
 
-Client::Client(std::string address, unsigned short port, udp::endpoint endpoint)
-    : _address(address), _port(port), _endpoint(endpoint)
+Client::Client(std::string address, unsigned short port, udp::endpoint endpoint, int id)
+    : _address(address), _port(port), _endpoint(endpoint), _id(id)
 {
 }
 
@@ -45,4 +45,14 @@ void    Client::setReady(bool ready)
 bool    Client::getReady() const
 {
     return _isReady;
+}
+
+int Client::getId() const
+{
+    return _id;
+}
+
+void    Client::setId(int id)
+{
+    _id = id;
 }

@@ -35,8 +35,14 @@ void    ClientManager::initPtr()
 
 void    ClientManager::addClient()
 {
-    _udpServer->addClient(Client(_clientEndpoint.address().to_string(), _clientEndpoint.port(), _clientEndpoint));
-    lobbiesInfo();
+    std::string message = "ID " + std::to_string(_udpServer->getClientId()) + "\n";
+
+    _udpServer->addClient(Client(_clientEndpoint.address().to_string(), _clientEndpoint.port(), _clientEndpoint, _udpServer->getClientId()));
+    _udpServer->_socket.async_send_to(boost::asio::buffer(message), _clientEndpoint,
+        [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
+        });
+    _udpServer->incrClientId();
+    //lobbiesInfo();
 }
 
 udp::endpoint   ClientManager::getEndpoint()
@@ -80,7 +86,7 @@ void    ClientManager::lobbiesInfo()
     oss << lobbies.size();
     for (std::map<std::string, Lobby>::iterator it = lobbies.begin();
         it != lobbies.end(); it++) {
-            oss << " " << it->second.getName() << " " << it->second.getNbClients() << " " << it->second.getLevel();
+            oss << " " << it->second.getName() << " " << it->second.getNbClients() << " " << it->second.getLevel() << " " << it->second.getMaxPlace();
     }
     oss << std::endl;
     _udpServer->_socket.async_send_to(boost::asio::buffer(oss.str()), _clientEndpoint,
@@ -95,15 +101,18 @@ void    ClientManager::createLobby()
     std::string lobbyInfo = _clientMessage.substr(_clientMessage.find("NEW") + 4);
     std::string lobbyName = lobbyInfo.substr(0, lobbyInfo.find(" "));
     std::string lobbyLevel;
+    std::string maxPlace;
 
     if (lobbyInfo.find(" ") + 1 < lobbyInfo.size()) {
         lobbyLevel = lobbyInfo.substr(lobbyInfo.find(" "));
         std::cout << "lobbyLevel = " << lobbyInfo << std::endl;
-        if (std::atoi(lobbyLevel.c_str()) <= 0 || isNameTaken(lobbyName) == true)
+        maxPlace = lobbyInfo.substr(lobbyInfo.find(" ") + 3);
+        std::cout << "maxPlace = " << maxPlace << std::endl;
+        if (std::atoi(lobbyLevel.c_str()) <= 0 || isNameTaken(lobbyName) == true ||
+            std::atoi(maxPlace.c_str()) <= 0 || std::atoi(maxPlace.c_str()) > 4)
             message = "ERROR\n";
         else {
-            _udpServer->addLobby(Lobby(lobbyName, _udpServer->getClient(_clientEndpoint), std::atoi(lobbyLevel.c_str())));
-            _udpServer->changeClientStatus(true);
+            _udpServer->addLobby(Lobby(lobbyName, _udpServer->getClient(_clientEndpoint), std::atoi(lobbyLevel.c_str()), std::atoi(maxPlace.c_str())));
             message = "OK\n";
         }
     }
@@ -120,9 +129,11 @@ void    ClientManager::joinLobby()
     std::string message = "ERROR\n";
     std::string lobbyName = _clientMessage.substr(_clientMessage.find("JOIN") + 5);
 
+    std::cout << lobbyName << std::endl;
     if (isNameTaken(lobbyName) == true && clientsInLobby(lobbyName) < 4) {
-        message = "OK\n";
         _udpServer->addClientInLobby(lobbyName, _clientEndpoint);
+        sendMessageInLobby("JOIN");
+        getClientsInLobbyInformations(message);
     }
     _udpServer->_socket.async_send_to(boost::asio::buffer(message), _clientEndpoint,
         [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
@@ -146,6 +157,13 @@ void    ClientManager::setStart()
             else
                 readyStatus = false;
             _udpServer->changeClientStatus(readyStatus);
+            if (_udpServer->clientsAreReady() == true) {
+                _udpServer->addGame();
+                sendMessageInLobby("GAME START");
+                message = "GAME START\n";
+            }
+            else
+                sendMessageInLobby("READY");
     }
     _udpServer->_socket.async_send_to(boost::asio::buffer(message), _clientEndpoint,
         [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
@@ -196,4 +214,38 @@ Lobby   ClientManager::getClientLobby()
                 }
     }
     return clientLobby;
+}
+
+void    ClientManager::sendMessageInLobby(std::string information)
+{
+    Lobby lobby = _udpServer->getClientLobby();
+    std::vector<Client> clients = lobby.getClients();
+    Client  currentClient = _udpServer->getClient(_clientEndpoint);
+    std::string message = "LOBBY " + std::to_string(currentClient.getId()) + " " + information + "\n";
+
+    for (unsigned int it = 0; it < clients.size(); it++) {
+        if (clients.at(it).getEndpoint() != _clientEndpoint) {
+            _udpServer->_socket.async_send_to(boost::asio::buffer(message), clients.at(it).getEndpoint(),
+            [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
+            });
+        }
+    }
+}
+
+void    ClientManager::getClientsInLobbyInformations(std::string &message)
+{
+    Lobby   lobby = _udpServer->getClientLobby();
+    std::vector<Client> clients = lobby.getClients();
+
+    message = std::to_string(clients.size() - 1);
+    for (unsigned int it = 0; it < clients.size(); it++) {
+        if (clients.at(it).getEndpoint() != _clientEndpoint) {
+            message += " " + std::to_string(clients.at(it).getId());
+            if (clients.at(it).getReady() == true)
+                message += " READY";
+            else
+                message += " UNREADY";
+        }
+    }
+    message += "\n";
 }
