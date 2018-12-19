@@ -144,3 +144,14 @@ const ASceneScreen	&ASceneScreen::operator=(const Engine::ASceneScreen
 
 	return *this;
 }
+
+void		ASceneScreen::addButton(const Button &button) noexcept
+{
+	_buttons.push_back(button);
+}
+
+void		ASceneScreen::addButton(const Rect &buttonPositon,
+		const ButtonRequest &buttonRequest)noexcept
+{
+	_buttons.push_back(Engine::Button(buttonPositon, buttonRequest));
+}

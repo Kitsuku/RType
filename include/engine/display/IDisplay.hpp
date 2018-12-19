@@ -63,10 +63,15 @@ namespace Engine {
 					const Vector &moveRect,
 					const unsigned int maxRepetition)
 					const noexcept = 0;
+		virtual void		setFont() = 0;
 		virtual void	drawComponent(const IComponent
 				&component) = 0;
 		virtual void	drawSceneScreen(ASceneScreen
 				&aSceneScreen) = 0;
+		virtual void	drawBox(const Rect &box) noexcept = 0;
+		virtual void	drawText(const std::string &text,
+				const Vector &position, unsigned int size)
+				noexcept = 0;
 		virtual	const InputKey		&getInputKey() const noexcept = 0;
 		virtual	const Vector	&getClickPos()
 						const noexcept = 0;
@@ -76,8 +81,9 @@ namespace Engine {
 		virtual void 	displayBackground() const noexcept = 0;
 		virtual void	playBackgroundMusic(std::string)
 				const noexcept = 0;
-		virtual void	display() noexcept = 0;
 		virtual void	eventHandler() noexcept = 0;
+		virtual void	display() noexcept = 0;
+		virtual void	closeWindow() noexcept = 0;
 	};
 }
 #endif /* !IDISPLAY_HPP_ */

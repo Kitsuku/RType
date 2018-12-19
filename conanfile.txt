@@ -4,6 +4,10 @@ boost/1.68.0@conan/stable
 
 [options]
 boost:shared=True
+sfml:window=True
+sfml:graphics=True
+sfml:network=True
+sfml:shared=True
 
 [generators]
 cmake

@@ -18,15 +18,20 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/engine
 			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/screen
 			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/scene
 			${CMAKE_CURRENT_SOURCE_DIR}/include/server
-			${CMAKE_CURRENT_SOURCE_DIR}/include/client)
+			${CMAKE_CURRENT_SOURCE_DIR}/include/client
+			${CMAKE_CURRENT_SOURCE_DIR}/include/masterClient
+			${CMAKE_CURRENT_SOURCE_DIR}/include/
+			${CMAKE_CURRENT_SOURCE_DIR}/include/engine)
 
-set(CMAKE_CXX_FLAGS "-lsfml-graphics -lsfml-window -lsfml-system -ldl")
+set(CMAKE_CXX_FLAGS "-ldl -W -Wall -Wextra -g")
 
 add_library(engine STATIC engine/GameEngine.cpp
 			   engine/Transform.cpp
 			   engine/Objective.cpp
 			   engine/Feature.cpp
-			   engine/sceneScreen/LobbyScreen.cpp
+			   engine/sceneScreen/MenuScreen.cpp
+			   engine/sceneScreen/ChannelScreen.cpp
+			   engine/sceneScreen/CreateLobbyScreen.cpp
 			   engine/sceneScreen/ASceneScreen.cpp
 			   engine/sceneScreen/Button.cpp
 			   engine/utils/Vector.cpp
@@ -48,7 +53,12 @@ add_library(engine STATIC engine/GameEngine.cpp
 			   engine/scene/Scene.cpp
 			   engine/scene/SceneLoader.cpp
 			   engine/scene/ActorLoader.cpp
-			   engine/screen/Screen.cpp)
+			   engine/screen/Screen.cpp
+			   source/masterClient/MasterClient.cpp
+	  		   source/client/UdpClient.cpp
+	  		   source/client/LobbyClient.cpp
+	  		   source/client/ClientInLobby.cpp
+	  		   source/Launcher.cpp)
 
 add_executable(rtype-server source/server/Main.cpp
 	source/server/UdpServer.cpp
@@ -57,10 +67,10 @@ add_executable(rtype-server source/server/Main.cpp
 	source/server/Lobby.cpp
 	source/server/Game.cpp)
 
-add_executable(rtype-client source/client/Main.cpp
+add_executable(rtype-client source/Main.cpp
 	source/client/UdpClient.cpp
 	source/client/LobbyClient.cpp
 	source/client/ClientInLobby.cpp)
 target_link_libraries(rtype-client ${CONAN_LIBS} engine)
 
-target_link_libraries(rtype-server ${CONAN_LIBS} engine)
+target_link_libraries(rtype-server ${CONAN_LIBS})

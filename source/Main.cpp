@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <unordered_map>
+#include <thread>
 
 #include "GameEngine.hpp"
 #include "SfmlDisplay.hpp"
@@ -21,8 +22,9 @@
 #include "SceneLoader.hpp"
 #include "Button.hpp"
 #include "Rect.hpp"
-#include "LobbyScreen.hpp"
+#include "MenuScreen.hpp"
 #include "Screen.hpp"
+#include "Launcher.hpp"
 
 void	setActor(std::ostream &stream, const std::vector<std::string> &path)
 {
@@ -51,7 +53,7 @@ void	appear(std::ostream &s, Engine::SceneApparition &app,
 	}
 }
 
-int main()
+/* int main()
 {
 	Engine::SfmlDisplay *disp = new Engine::SfmlDisplay;
 	Engine::GameEngine engine(disp);
@@ -81,14 +83,12 @@ int main()
 	//so.addTask(std::make_unique<Engine::TaskObjective>(Engine::Vector(3,3)));
 	appear(f, e, &so);
 	appear(f, e);
-	appear(f, last);
-	f.close();
+	appear(f, last); f.close();
 
 	engine.open();
-	engine.addComponent(std::make_unique<Engine::Component>(engine, true));
 	engine.playScene("plop.scn");
 	return 0;
-}
+} */
 
 
 /* int main()
@@ -103,8 +103,7 @@ int main()
 	Engine::Transform	transform_2({400, 400}, {0, 0}, {2, 2});
 	Engine::SfmlController	sfmlController;
 	const Rect		tata = {200, 200, 100, 100};
-	Engine::LobbyScreen	lobbyScreen(Engine::Transform({0, 0}, {0, 0}, {1, 1}));
-	Engine::LobbyScreen	otherScreen(Engine::Transform({0, 0}, {0, 0}, {1, 1}));
+
 	//Engine::LobbyScreen	lobbyScreen(Engine::Transform({0 ,0}, {0 ,0}, {1, 1}));
 	Rect spriteRect = {0, 0, 33, 33};
 	Engine::Vector vectorMove(33, 0);
@@ -170,3 +169,22 @@ int main()
 	}
 	return 0;
 } */
+
+//main masterclient
+int main(int ac, const char **av)
+{
+	Engine::SfmlController	sfmlController;
+	std::string		path(av[0]);
+	Engine::SfmlDisplay	sfmlDisplayer(path);
+	Launcher		launcher(ac, av,
+				sfmlController, sfmlDisplayer);
+	if (!launcher.isError()) {
+		return 84;
+	}
+	try {
+		launcher.launch();
+	} catch (std::exception &e) {
+		std::cerr << e.what() << std::endl;
+        	return 84;
+	}
+}

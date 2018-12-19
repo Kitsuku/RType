@@ -12,6 +12,10 @@
     public:
     UdpClient(std::string, std::string, boost::asio::io_service &);
     void    start(udp::resolver::iterator);
+    const LobbyClient   &getLobbyClient() const noexcept;
+    std::map<std::string, LobbyClient>      &getLobbies() noexcept;
+    void    setLobbies();
+    void    setSendMessage(const std::string mesage) noexcept;
 
     private:
     void    startConnect(udp::resolver::iterator);
@@ -22,15 +26,15 @@
     void    manageReceiveMessage();
     void    manageMyLobby();
     void    getMyId();
+    void    makeClientReadWrite() noexcept;
 
-    void    setLobbies();
     void    checkJoin();
     void    checkCreate();
 
     udp::endpoint   _myEndpoint;
     udp::endpoint   _serverEndpoint;
     std::string     _sendMessage;
-    std::array<char, 128>     _receiveMessage;
+    std::array<char, 1000>     _receiveMessage;
     udp::socket     _socket;
     std::map<std::string, LobbyClient>    _lobbies;
     LobbyClient _myLobby;
@@ -41,5 +45,7 @@
     bool    _ready;
     bool    _inGame;
     bool    _firstMessage = true;
+    bool    _isReading = false;
+    bool    _isConnected = true;
     };
 #endif

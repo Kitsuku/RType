@@ -8,12 +8,13 @@
 #ifndef BUTTONREQUEST_HPP_
 	#define BUTTONREQUEST_HPP_
 	
-	#include "GameEngine.hpp"
-	using fptrButton = void (Engine::GameEngine::*) (void);
+class MasterClient;
+	using fptrButton = void (MasterClient::*) (void);
 
 struct ButtonRequest {
-	fptrButton	fptr;
-	bool		needRequest;
+	std::string		buttonName;
+	fptrButton		fptr;
+	bool			needRequest;
 };
 
 using ButtonRequest = struct ButtonRequest;

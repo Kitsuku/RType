@@ -14,9 +14,6 @@
 	#include "Client.hpp"
 	#include "Lobby.hpp"
 	#include "Game.hpp"
-	#include "ScriptObject.hpp"
-	#include "SceneApparition.hpp"
-	#include "GameEngine.hpp"
 
 	using boost::asio::ip::udp;
 
@@ -47,12 +44,6 @@
 		void	deleteLobby(std::string);
 		void	moveComponents();
 		void	catchPlayerMovement();
-
-		// Temp
-
-		void	setActor(std::ostream &stream, const std::vector<std::string> &path);
-		void	appear(std::ostream &s, Engine::SceneApparition &app,
-			Engine::ScriptObject *so = nullptr);
 
 		udp::socket _socket;
 		udp::socket	_gameSocket;

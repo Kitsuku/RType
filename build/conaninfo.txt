@@ -1,0 +1,93 @@
+[settings]
+    arch=x86_64
+    build_type=Release
+    compiler=gcc
+    compiler.libcxx=libstdc++11
+    compiler.version=8
+    os=Linux
+
+[requires]
+    boost/1.Y.Z
+    sfml/2.Y.Z
+
+[options]
+
+
+[full_settings]
+    arch=x86_64
+    arch_build=x86_64
+    build_type=Release
+    compiler=gcc
+    compiler.libcxx=libstdc++11
+    compiler.version=8
+    os=Linux
+    os_build=Linux
+
+[full_requires]
+    boost/1.68.0@conan/stable:233b338bb25e11a5779f1fc0340b9da1fe3ec240
+    bzip2/1.0.6@conan/stable:1d877a3df840030e6a8abb74c5ffb9088d08b47a
+    freetype/2.9.0@bincrafters/stable:485280d4846b50c04fca8046d8dfc472751a0e80
+    libpng/1.6.34@bincrafters/stable:4f75e4b120320a9fb6ac0012242d9ac95d18b6f6
+    sfml/2.5.1@bincrafters/stable:945005ca7e49a111af9e6bb625f2ca6ddfa2925e
+    stb/20180214@conan/stable:5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9
+    zlib/1.2.11@conan/stable:1d877a3df840030e6a8abb74c5ffb9088d08b47a
+
+[full_options]
+    boost:fPIC=True
+    boost:header_only=False
+    boost:magic_autolink=False
+    boost:shared=True
+    boost:skip_lib_rename=False
+    boost:without_atomic=False
+    boost:without_chrono=False
+    boost:without_container=False
+    boost:without_context=False
+    boost:without_contract=False
+    boost:without_coroutine=False
+    boost:without_date_time=False
+    boost:without_exception=False
+    boost:without_fiber=False
+    boost:without_filesystem=False
+    boost:without_graph=False
+    boost:without_graph_parallel=False
+    boost:without_iostreams=False
+    boost:without_locale=False
+    boost:without_log=False
+    boost:without_math=False
+    boost:without_mpi=False
+    boost:without_program_options=False
+    boost:without_python=True
+    boost:without_random=False
+    boost:without_regex=False
+    boost:without_serialization=False
+    boost:without_signals=False
+    boost:without_stacktrace=False
+    boost:without_system=False
+    boost:without_test=False
+    boost:without_thread=False
+    boost:without_timer=False
+    boost:without_type_erasure=False
+    boost:without_wave=False
+    bzip2:fPIC=True
+    bzip2:shared=False
+    freetype:fPIC=True
+    freetype:shared=False
+    freetype:with_png=True
+    freetype:with_zlib=True
+    libpng:fPIC=True
+    libpng:shared=False
+    sfml:audio=False
+    sfml:fPIC=True
+    sfml:graphics=True
+    sfml:network=True
+    sfml:shared=True
+    sfml:window=True
+    zlib:fPIC=True
+    zlib:minizip=False
+    zlib:shared=False
+
+[recipe_hash]
+
+
+[env]
+

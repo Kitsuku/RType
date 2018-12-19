@@ -51,8 +51,3 @@ int Client::getId() const
 {
     return _id;
 }
-
-void    Client::setId(int id)
-{
-    _id = id;
-}

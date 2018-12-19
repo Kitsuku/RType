@@ -4,19 +4,17 @@
     #include <boost/asio.hpp>
     #include <vector>
     #include "Client.hpp"
-    #include "GameEngine.hpp"
 
     using boost::asio::ip::udp;
 
     class Game {
     public:
-    Game(std::vector<Client>, int, Engine::GameEngine &);
+    Game(std::vector<Client>, int);
     int getLevel() const;
-    //void    setEngine(Engine::GameEngine);
 
     private:
     std::vector<Client> _clients;
-    Engine::GameEngine  &_engine;
+    // stock components ici et créer méthode pour les moves??
     int _level;
     };
 #endif

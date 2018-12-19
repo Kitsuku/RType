@@ -20,6 +20,7 @@ SRC 	= source/Main.cpp
 OBJ 	= $(SRC:.cpp=.o)
 
 CXXFLAGS	+= -W -Wall -Wextra -g
+CXXFLAGS	+= -I include/
 CXXFLAGS	+= -I include/engine
 CXXFLAGS	+= -I include/engine/utils
 CXXFLAGS	+= -I include/engine/component
@@ -33,10 +34,13 @@ CXXFLAGS	+= -I engine/display
 CXXFLAGS	+= -I include/engine/sceneScreen/
 CXXFLAGS	+= -I include/engine/screen
 CXXFLAGS	+= -I include/engine/scene
+CXXFLAGS	+= -I include/masterClient/
+CXXFLAGS	+= -I include/client/
 
 LDFLAGS	= -L engine -lengine
 LDFLAGS	+= -lsfml-graphics -lsfml-window -lsfml-system
 LDFLAGS += -ldl
+LDFLAGS += -lboost_system -lboost_date_time -lboost_thread -lpthread
 
 $(NAME): $(OBJ)
 	$(LIBMAKE)

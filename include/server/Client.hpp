@@ -19,7 +19,6 @@
             void    setReady(bool);
             bool    getReady() const;
             int     getId() const;
-            void    setId(int);
         private:
             std::string _address;
             unsigned short  _port;

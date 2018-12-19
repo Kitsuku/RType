@@ -10,10 +10,12 @@
 #include "DisplayException.hpp"
 
 using Engine::SfmlDisplay;
-
+#include <iostream>
 // Ctor & Dtor
-SfmlDisplay::SfmlDisplay()
+SfmlDisplay::SfmlDisplay(std::string &path): _path(path)
 {
+	_path.replace(_path.find("rtype-client"), std::string::npos,
+	"ressources/");
 }
 
 SfmlDisplay::~SfmlDisplay()
@@ -45,8 +47,7 @@ Engine::ARenderer	*SfmlDisplay::createRenderer(const std::string
 			&ressourcesPath)
 			const noexcept
 {
-	std::string	path = std::string("ressources/") + ressourcesPath;
-	SfmlRenderer	*renderer = new SfmlRenderer(path);
+	SfmlRenderer	*renderer = new SfmlRenderer(_path + ressourcesPath);
 
 	return renderer;
 }
@@ -55,8 +56,7 @@ Engine::ARenderer	*SfmlDisplay::createRenderer(const std::string
 			&ressourcesPath, const Rect &spriteRectangle)
 			const noexcept
 {
-	std::string	path = std::string("ressources/") + ressourcesPath;
-	SfmlRenderer	*renderer = new SfmlRenderer(path,
+	SfmlRenderer	*renderer = new SfmlRenderer(_path + ressourcesPath,
 				spriteRectangle);
 
 	return renderer;
@@ -67,8 +67,7 @@ Engine::ARenderer	*SfmlDisplay::createRenderer(const std::string
 			const Engine::Vector &moveRect)
 			const noexcept
 {
-	std::string	path = std::string("ressources/") + ressourcesPath;
-	SfmlRenderer	*renderer = new SfmlRenderer(path,
+	SfmlRenderer	*renderer = new SfmlRenderer(_path + ressourcesPath,
 				spriteRectangle, moveRect);
 
 	return renderer;
@@ -80,11 +79,18 @@ Engine::ARenderer	*SfmlDisplay::createRenderer(const std::string
 			const unsigned int repetition)
 			const noexcept
 {
-	std::string	path = std::string("ressources/") + ressourcesPath;
-	SfmlRenderer	*renderer = new SfmlRenderer(path,
+	SfmlRenderer	*renderer = new SfmlRenderer(_path + ressourcesPath,
 				spriteRectangle, moveRect, repetition);
 
 	return renderer;
+}
+
+void			SfmlDisplay::setFont()
+{
+	if (!_font.loadFromFile(_path + "Future_n0t_Found_Regular.ttf")) {
+		throw DisplayException("No font provided");
+	}
+	_sfText.setFont(_font);
 }
 
 void	SfmlDisplay::drawComponent(const Engine::IComponent &component)
@@ -164,6 +170,31 @@ void	SfmlDisplay::display() noexcept
 	_window.clear();
 }
 
+void		SfmlDisplay::drawBox(const Rect &box) noexcept
+{
+	sf::RectangleShape	rectangle;
+
+	rectangle.setSize(sf::Vector2f(box.width, box.height));
+	rectangle.setFillColor(sf::Color(255, 255, 255, 123));
+	rectangle.setPosition(box.pos_x, box.pos_y);
+	_window.draw(rectangle);
+}
+
+void		SfmlDisplay::drawText(const std::string &text,
+		const Vector &position, unsigned int size) noexcept
+{
+	_sfText.setString(text);
+	_sfText.setCharacterSize(size);
+	_sfText.setFillColor(sf::Color::Black);
+	_sfText.setPosition(position.getX(), position.getY());
+	_window.draw(_sfText);
+}
+
+void		SfmlDisplay::closeWindow() noexcept
+{
+	_window.close();
+}
+
 // Private method
 void	SfmlDisplay::createRenderState(
 			const Engine::Transform &transform)
@@ -185,6 +216,9 @@ void	SfmlDisplay::eventHandler() noexcept
 	_clickPos = {0, 0};
 
 	if (_window.pollEvent(_event)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+			_window.close();
+		}
 		setInputKey();
 		setClickPos();
 	}

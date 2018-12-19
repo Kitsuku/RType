@@ -17,7 +17,7 @@ namespace Engine {
 	class SfmlDisplay: public IDisplay {
 	public:
 		// Ctor & Dtor
-		SfmlDisplay();
+		SfmlDisplay(std::string &path);
 		~SfmlDisplay() override;
 		// Operator
 		// Setter
@@ -44,7 +44,8 @@ namespace Engine {
 					const Rect &spriteRectangle,
 					const Vector &moveRect,
 					const unsigned int maxRepetition)
-					const noexcept;			
+					const noexcept;
+		void		setFont();
 		void	drawComponent(const IComponent &component);
 		void	drawSceneScreen(ASceneScreen
 			&sceneScreen);
@@ -58,6 +59,11 @@ namespace Engine {
 				const noexcept;
 		void		eventHandler() noexcept;
 		void		display() noexcept;
+		void		drawBox(const Rect &box) noexcept;
+		void		drawText(const std::string &text,
+				const Vector &position, unsigned int size)
+				noexcept;
+		void		closeWindow() noexcept;
 	private:
 		void		createRenderState(
 				const Transform &transform);
@@ -66,10 +72,14 @@ namespace Engine {
 		void		scrollable(ASceneScreen &sceneSreen,
 				SfmlRenderer *renderer) noexcept;
 		InputKey		_inputKey = {false, 0, false};
+		std::string		&_path;
 		Vector		_clickPos = {0, 0};
+		sf::RectangleShape	_rectangle;
 		sf::RenderWindow	_window;
 		sf::Event		_event;
 		sf::RenderStates	_renderStates;
+		sf::Font		_font;
+		sf::Text		_sfText;
 	};
 }
 #endif /* !SFMLDISPLAY_HPP_ */

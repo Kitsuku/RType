@@ -8,16 +8,12 @@
 #ifndef ASCENESCREEN_HPP_
 	#define ASCENESCREEN_HPP_
 
-namespace Engine {
-	class Button;
-}
-
 	#include <vector>
 	#include "Vector.hpp"
 	#include "ARenderer.hpp"
-	#include "Button.hpp"
 	#include "ButtonRequest.hpp"
 	#include "Transform.hpp"
+	#include "Button.hpp"
 
 namespace Engine {
 	class ASceneScreen {
@@ -45,10 +41,12 @@ namespace Engine {
 		void		setButtons(std::vector<Button> buttons) noexcept;
 		void		setInitialPos(Vector _initialPos) noexcept;
 		// Method
-		bool		isPressed(const Vector &clickPos)
-				noexcept;
+		bool		isPressed(const Vector &clickPos) noexcept;
 		const ASceneScreen	&operator=(const ASceneScreen
 					&sceneScreen) noexcept;
+		void		addButton(const Button &button) noexcept;
+		void		addButton(const Rect &buttonPositon, const
+				ButtonRequest &buttonRequest) noexcept;
 	protected:
 		ARenderer		*_renderer = nullptr;
 		Transform		_transform;

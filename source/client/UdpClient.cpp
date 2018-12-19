@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <exception>
+#include <boost/throw_exception.hpp>
 #include <boost/bind.hpp>
 #include <boost/array.hpp>
 
@@ -16,6 +18,11 @@ UdpClient::UdpClient(std::string host, std::string port, boost::asio::io_service
     _inLobby = false;
     _ready = false;
     _inGame = false;
+}
+
+void    UdpClient::setSendMessage(const std::string message) noexcept
+{
+    _sendMessage = message;
 }
 
 void    UdpClient::start(udp::resolver::iterator endpointIt)
@@ -48,38 +55,90 @@ void    UdpClient::startConnect(udp::resolver::iterator endpointIt)
                     _sendMessage = "GAME SERVER JOINED";
                 else
                     _sendMessage = "NOUVEAU CLIENT";
-                startWrite();
+                //startWrite();
+                _socket.send_to(boost::asio::buffer(_sendMessage), _serverEndpoint);
+                makeClientReadWrite();
+                std::cout << "The end?" << std::endl;
             }
         });
     }
 }
 
+void    UdpClient::makeClientReadWrite() noexcept
+{
+    /*std::thread clientRead([this] {
+        std::cout << "read thread" << std::endl;
+        sleep(0.2);
+        this->startRead();
+    });
+    clientRead.join();*/
+
+    startRead();
+    std::thread clientWrite([this] {
+        this->startWrite();
+    });
+    clientWrite.detach();
+}
+
 void    UdpClient::startWrite()
+{
+    static  bool    firstWrite = true;
+
+    if (firstWrite == true) {
+        firstWrite = false;
+        sleep(1);
+    }
+    if (_isConnected == false)
+        return;
+    while (_sendMessage.empty() == true);
+    if (_sendMessage != "") {
+        _sendMessage += "\n";
+        std::cout << "Avant fail" << std::endl;
+        _socket.send_to(boost::asio::buffer(_sendMessage), _serverEndpoint);
+        std::cout << "Apres" << std::endl;
+    }
+    sleep(0.3);
+    startWrite();
+}
+
+/*void    UdpClient::startWrite()
 {
     if (_sendMessage != "") {
         _sendMessage += "\n";
+        std::cout << "Le message est " << _sendMessage;
         _socket.send_to(boost::asio::buffer(_sendMessage), _serverEndpoint);
     }
-    startRead();
-}
+    if (_isReading != true) {
+        _isReading = true;
+        std::thread clientRead([this] {
+            this->startRead();
+        });
+        clientRead.detach();
+    }
+    startWrite();
+}*/
 
 void    UdpClient::startRead()
 {
+    //std::cout << "en attente de quelque chose à read" << std::endl;
     _socket.async_receive_from(boost::asio::buffer(_receiveMessage), _serverEndpoint,
     boost::bind(&UdpClient::handleReceive, this, boost::asio::placeholders::error,
     boost::asio::placeholders::bytes_transferred));
 }
 
 void    UdpClient::handleReceive(const boost::system::error_code& error, size_t bytes_transferred) {
+    //std::cout << "Dans handle" << std::endl;
     if (error) {
         std::cout << "Receive failed: " << error.message() << "\n";
+        _isConnected = false;
         return;
     }
     _receiveMessage.at(bytes_transferred - 1) = 0;
-    std::cout << "Received: '" << _receiveMessage.data() << "' (" << error.message() << ")\n";
+    //std::cout << "Received: '" << _receiveMessage.data() << "' (" << error.message() << ")\n";
     if (_firstMessage == true) {
         getMyId();
         _firstMessage = false;
+        _sendMessage = "";
     }
     manageReceiveMessage();
 }
@@ -91,6 +150,16 @@ void    UdpClient::getMyId()
     message.erase(0, message.find(" ") + 1);
     _myId = std::atoi(message.c_str());
     std::cout << "Mon id est:" << message << std::endl;
+}
+
+const LobbyClient   &UdpClient::getLobbyClient() const noexcept
+{
+    return _myLobby;
+}
+
+std::map<std::string, LobbyClient>      &UdpClient::getLobbies() noexcept
+{
+    return _lobbies;
 }
 
 void    UdpClient::manageReceiveMessage()
@@ -105,15 +174,14 @@ void    UdpClient::manageReceiveMessage()
         checkJoin();
     else if (_sendMessage.find("LOBBY NEW") != _sendMessage.npos)
         checkCreate();
-    // Check si client est inGame, si oui check qui a move/apparait, si non check si ma commande de lobby a fonctionné
     if (message.find("GAME START") != message.npos) {
         _socket.close();
         _inGame = true;
         udp::resolver resolver(_io);
         std::cout << "Je dois start la game" << std::endl;
         start(resolver.resolve(udp::resolver::query(udp::v4(), _host, std::to_string(14))));
-    } else
-        defineAction();
+    }
+    startRead();
 }
 
 void    UdpClient::manageMyLobby()
@@ -142,10 +210,7 @@ void    UdpClient::manageMyLobby()
 
 void    UdpClient::defineAction()
 {
-    if (_inGame != true)
-        getline(std::cin, _sendMessage);
-    else
-        _sendMessage = "";
+    getline(std::cin, _sendMessage);
     startWrite();
 }
 
@@ -158,9 +223,9 @@ void    UdpClient::setLobbies()
     int level;
     int maxPlace;
 
-    std::cout << "nbLobbies = " << nbLobbies << std::endl;
+    //std::cout << "nbLobbies = " << nbLobbies << std::endl;
     message.erase(0, message.find(" ") + 1);
-    std::cout << "message = " << message << std::endl;
+    //std::cout << "message = " << message << std::endl;
     _lobbies.clear();
     for (int it = 0; it < nbLobbies; it++) {
         lobbyName = message.substr(0, message.find(" "));
@@ -171,14 +236,14 @@ void    UdpClient::setLobbies()
         message.erase(0, message.find(" ") + 1);
         maxPlace = std::atoi(message.substr(0, message.find(" ")).c_str());
         message.erase(0, message.find(" ") + 1);
-        std::cout << "LobbyName = " << lobbyName << ", nbClients = " << nbClients << ", level = " << level << ", maxPlace = " << maxPlace << std::endl;
+        //std::cout << "LobbyName = " << lobbyName << ", nbClients = " << nbClients << ", level = " << level << ", maxPlace = " << maxPlace << std::endl;
         _lobbies[lobbyName] = LobbyClient(lobbyName, nbClients, level, maxPlace);
     }
-    std::cout << "Voici les lobby que j'ai stock: " << std::endl;
+    /* std::cout << "Voici les lobby que j'ai stock: " << std::endl;
     for (std::map<std::string, LobbyClient>::iterator it = _lobbies.begin(); it != _lobbies.end(); it++) {
         std::cout << "- " << it->second.getName() << " " << it->second.getNbClients() << " " << it->second.getLevel() << " " << it->second.getMaxPlace() << std::endl;
     }
-    std::cout << std::endl;
+    std::cout << std::endl; */
 }
 
 void    UdpClient::checkJoin()
@@ -191,6 +256,7 @@ void    UdpClient::checkJoin()
     if (message != "ERROR") {
         _sendMessage.erase(0, _sendMessage.find("LOBBY JOIN") + 11);
         _sendMessage.erase(_sendMessage.end() - 1);
+        std::cout << "lobbyName = " << _sendMessage << std::endl;
         _myLobby = _lobbies.find(_sendMessage)->second;
         _myLobby.addClient(_myId, false);
         nbClients = std::atoi(message.substr(0, message.find(" ")).c_str());

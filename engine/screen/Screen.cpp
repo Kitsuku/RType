@@ -52,7 +52,15 @@ void	Screen::displayGame(std::unordered_map
 		}
 		++it;
 	}
-	_displayer.display();
+}
+
+void	Screen::displaySceneScreen() const noexcept
+{
+	try {
+		_displayer.drawSceneScreen(_sceneScreen);
+	} catch (Engine::DisplayException &error) {
+		std::cerr << error.what() << std::endl;
+	}
 }
 
 void	Screen::eventHandler() noexcept
@@ -80,4 +88,116 @@ const Engine::Vector	&Screen::getClickPos() const noexcept
 char		Screen::getControllerKey() const noexcept
 {
 	return _controller.convertKey(_inputKey);
+}
+
+bool		Screen::isButtonPressed(const Vector &clickPos) noexcept
+{
+	const bool	ret = _sceneScreen.isPressed(clickPos);
+
+	_request = _sceneScreen.getRequest();
+	return ret;
+}
+
+void		Screen::addButton(const Button &button) noexcept
+{
+	_sceneScreen.addButton(button);
+}
+
+void		Screen::addButton(const Rect &buttonPositon,
+		const ButtonRequest &buttonRequest)noexcept
+{
+	_sceneScreen.addButton(Engine::Button(buttonPositon, buttonRequest));
+}
+
+void		Screen::setButtons(std::vector<Button> buttons)
+		noexcept
+{
+	_sceneScreen.setButtons(buttons);
+}
+
+Engine::ARenderer	*Screen::createRenderer(
+			const std::string &ressourcesPath) const noexcept
+{
+	return _displayer.createRenderer(ressourcesPath);
+}
+
+Engine::ARenderer	*Screen::createRenderer(
+			const std::string &ressourcesPath,
+			const Rect &spriteRectangle) const noexcept
+{
+	return _displayer.createRenderer(ressourcesPath, spriteRectangle);
+}
+
+Engine::ARenderer	*Screen::createRenderer(
+			const std::string &ressourcesPath,
+			const Rect &spriteRectangle, const Vector &moveRect)
+			const noexcept
+{
+	return _displayer.createRenderer(ressourcesPath, spriteRectangle,
+	moveRect);
+}
+
+Engine::ARenderer	*Screen::createRenderer(
+			const std::string &ressourcesPath,
+			const Rect &spriteRectangle, const Vector &moveRect,
+			const unsigned int maxRepetition) const noexcept
+{
+	return _displayer.createRenderer(ressourcesPath, spriteRectangle,
+	moveRect, maxRepetition);
+}
+
+void			Screen::refreshWindow() noexcept
+{
+	_displayer.display();
+}
+
+void		Screen::displayLobbiesPlayer(std::map<std::string,
+					LobbyClient> lobbies) noexcept
+{
+	std::map<std::string, LobbyClient>::iterator	it;// = lobbies.begin();
+	std::string					text;
+	unsigned int					pos_y = 0;
+
+	if (!lobbies.empty()) {
+		it = lobbies.begin();
+		while (it != lobbies.end() && pos_y < 6) {
+			drawLobbyInfo(it->second, pos_y);
+/* 			text = "Level : " + std::to_string(it->second.getLevel());
+			_displayer.drawBox({775, 230 + pos_y * 80, 900, 60});
+			_displayer.drawText(text,
+			Engine::Vector(785, 240 + pos_y * 80), 35);
+			text = "Name : " + it->second.getName();
+			_displayer.drawText(text,
+			Engine::Vector(1100, 240 + pos_y * 80), 35);
+			text = std::to_string(it->second.getNbClients()) + "/"
+			+ std::to_string(it->second.getMaxPlace());
+			_displayer.drawText(text,
+			Engine::Vector(1600, 255 + pos_y * 80), 27); */
+			++it;
+			++pos_y;
+		}
+	}
+}
+
+void		Screen::closeWindow() noexcept
+{
+	_displayer.closeWindow();
+}
+
+void		Screen::drawLobbyInfo(const LobbyClient &lobby,
+		const unsigned int &pos_y) noexcept
+{
+	std::string	text;
+
+	text = "Level : " + std::to_string(lobby.getLevel());
+	_displayer.drawBox({775, 230 + pos_y * 80, 900, 60});
+	_displayer.drawText(text,
+	Engine::Vector(785, 240 + pos_y * 80), 35);
+	text = "Name : " + lobby.getName();
+	_displayer.drawText(text,
+	Engine::Vector(1100, 240 + pos_y * 80), 35);
+	text = std::to_string(lobby.getNbClients()) + "/"
+	+ std::to_string(lobby.getMaxPlace());
+	_displayer.drawText(text,
+	Engine::Vector(1600, 255 + pos_y * 80), 27);
 }
