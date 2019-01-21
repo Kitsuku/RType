@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2019
+** RType
+** File description:
+** Methods of Client object (server side)
+*/
+
 #include <iostream>
 #include "Client.hpp"
 
@@ -17,7 +24,7 @@ const std::string Client::getAddress() const
     return _address;
 }
 
-const unsigned short    Client::getPort() const
+unsigned short    Client::getPort() const
 {
     return _port;
 }
@@ -50,4 +57,9 @@ bool    Client::getReady() const
 int Client::getId() const
 {
     return _id;
+}
+
+void    Client::setEndpoint(udp::endpoint endpoint) noexcept
+{
+    _endpoint = endpoint;
 }

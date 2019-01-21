@@ -46,9 +46,9 @@ namespace Engine {
 					const unsigned int maxRepetition)
 					const noexcept;
 		void		setFont();
-		void	drawComponent(const IComponent &component);
-		void	drawSceneScreen(ASceneScreen
-			&sceneScreen);
+		void		drawComponent(const IComponent &component);
+		void		drawSceneScreen(ASceneScreen
+				&sceneScreen);
 		const InputKey	&getInputKey() const noexcept;
 		const Vector	&getClickPos() const noexcept;
 		bool		isWindowOpen() const noexcept;
@@ -64,6 +64,11 @@ namespace Engine {
 				const Vector &position, unsigned int size)
 				noexcept;
 		void		closeWindow() noexcept;
+		void		drawRect(const Rect &rect, const Color &color)
+				noexcept;
+		void		drawCircle(const Vector &position,
+				const Color &color, float radius)
+				noexcept;
 	private:
 		void		createRenderState(
 				const Transform &transform);
@@ -80,6 +85,7 @@ namespace Engine {
 		sf::RenderStates	_renderStates;
 		sf::Font		_font;
 		sf::Text		_sfText;
+		Engine::Vector		_winSize;
 	};
 }
 #endif /* !SFMLDISPLAY_HPP_ */

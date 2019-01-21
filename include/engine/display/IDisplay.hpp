@@ -23,6 +23,7 @@ namespace Engine {
 	#include "IComponent.hpp"
 	#include "Vector.hpp"
 	#include "ASceneScreen.hpp"
+	#include "Color.hpp"
 
 namespace Engine {
 	class IDisplay {
@@ -71,6 +72,11 @@ namespace Engine {
 		virtual void	drawBox(const Rect &box) noexcept = 0;
 		virtual void	drawText(const std::string &text,
 				const Vector &position, unsigned int size)
+				noexcept = 0;
+		virtual void	drawRect(const Rect &rect, const Color &color)
+				noexcept = 0;
+		virtual void	drawCircle(const Vector &position,
+				const Color &color, float radius)
 				noexcept = 0;
 		virtual	const InputKey		&getInputKey() const noexcept = 0;
 		virtual	const Vector	&getClickPos()

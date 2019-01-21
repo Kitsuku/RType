@@ -23,6 +23,7 @@ namespace Engine {
 		void	setWaiting() noexcept;
 		// Method
 		bool	isOver();
+		void	designWinner(bool friendly) noexcept;
 		void	achieveOjective(bool friendly, int id);
 		void	addObjective(bool friendly, int id) noexcept;
 	private:

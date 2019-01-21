@@ -45,6 +45,15 @@ bool	Objective::isOver()
 	return ret;
 }
 
+void	Objective::designWinner(bool friendly) noexcept
+{
+	if (friendly)
+		_teamB.clear();
+	else
+		_teamA.clear();
+	_waiting = false;
+}
+
 void	Objective::achieveOjective(bool friendly, int id)
 {
 	if (friendly)

@@ -9,6 +9,7 @@
 #include "SceneLoader.hpp"
 #include "SceneException.hpp"
 #include "ScriptedComponent.hpp"
+#include "TransSpawn.hpp"
 
 using Engine::SceneLoader;
 
@@ -25,12 +26,34 @@ bool	SceneLoader::isReading() const noexcept
 }
 
 // Method
-void	SceneLoader::loadFromFile(const std::string &path)
+void	SceneLoader::loadFromFile(const std::string &path) noexcept
 {
 	_scene.openFile(path);
 	for (const auto &actor : _scene.getActors()) {
 		_loader.addActor(std::string("entities/") + actor);
 	}
+}
+
+void	SceneLoader::loadFromHeader(std::istream &stream) noexcept
+{
+	_scene.loadFromStream(stream);
+}
+
+void	SceneLoader::serializeHeader(std::ostream &stream) noexcept
+{
+	_scene.serializeActors(stream);
+}
+
+void	SceneLoader::createByApparition(unsigned int id,
+const Engine::SceneApparition::SceneActor &actor)
+{
+	Engine::IComponent	*component = nullptr;
+
+	component = new Engine::Component(_engine, actor.transform,
+							actor.team);
+	component->setID(id);
+	component->setObjective(actor.objective);
+	_engine.addComponent(Engine::GameEngine::Element(component));
 }
 
 void	SceneLoader::start() noexcept
@@ -91,6 +114,16 @@ void	SceneLoader::applyAction()
 void	SceneLoader::addComponent()
 {
 	auto			app = _loader[_action.actor.actor];
+	auto			compo = createComponent();
+
+	compo->setObjective(_action.actor.objective);
+	_engine.translater->addAction(std::make_unique<Engine::TransSpawn>
+					(compo->getID(), _action.actor));
+	_engine.createComponent(Engine::GameEngine::Element(compo), app);
+}
+
+Engine::IComponent	*SceneLoader::createComponent()
+{
 	bool			team = _action.actor.team;
 	ScriptedComponent	*scompo = nullptr;
 	IComponent		*compo = nullptr;
@@ -104,8 +137,5 @@ void	SceneLoader::addComponent()
 	} else
 		compo = new Engine::Component(_engine,
 				_action.actor.transform, team);
-	compo->setObjective(_action.actor.objective);
-	compo->setBullet(app.bullet);
-	_engine.createComponent(Engine::GameEngine::Element(compo), app,
-							app.brain);
+	return compo;
 }

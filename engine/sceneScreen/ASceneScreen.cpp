@@ -155,3 +155,15 @@ void		ASceneScreen::addButton(const Rect &buttonPositon,
 {
 	_buttons.push_back(Engine::Button(buttonPositon, buttonRequest));
 }
+
+void		ASceneScreen::setBackInitialButtons() noexcept
+{
+	while (_buttons.size() != _initialNbrButtons) {
+		_buttons.pop_back();
+	}
+}
+
+unsigned short	ASceneScreen::getInitialNbrButtons() const noexcept
+{
+	return _initialNbrButtons;
+}

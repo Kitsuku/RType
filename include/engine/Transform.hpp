@@ -16,6 +16,7 @@ namespace Engine {
         public:
                 // Ctor & Dtor
                 Transform();
+                Transform(std::ifstream &stream);
                 Transform(const Vector &pos, const Vector &rota,
                                                 const Vector &scale);
                 ~Transform();
@@ -23,10 +24,11 @@ namespace Engine {
                 const Vector    &getPosition() const noexcept;
                 const Vector    &getRotation() const noexcept;
                 const Vector    &getScale() const noexcept;
-                // Methods
+                // Method
                 void    move(const Vector &translation) noexcept;
                 void    rotate(const Vector &rotation) noexcept;
                 void    place(const Vector &position) noexcept;
+                void    serialize(std::ostream &stream) const noexcept;
         private:
                 Vector  _position;
                 Vector  _rotation;

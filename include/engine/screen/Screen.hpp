@@ -47,8 +47,12 @@ namespace Engine {
 		void		addButton(const Button &button) noexcept;
 		void		addButton(const Rect &buttonPositon, const
 				ButtonRequest &buttonRequest) noexcept;
+		void		setBackInitialButtons() noexcept;
+		void		addLobbyButtons(std::map<std::string,
+				LobbyClient> &lobbies) noexcept;
 		void		setButtons(std::vector<Button> buttons)
 				noexcept;
+		unsigned short	getInitialNbrButtons() const noexcept;
 		ARenderer	*createRenderer(const std::string
 					&ressourcesPath)
 					const noexcept;
@@ -71,13 +75,20 @@ namespace Engine {
 		void		displayLobbiesPlayer(std::map<std::string,
 				LobbyClient>) noexcept;
 		void		closeWindow() noexcept;
+		void		drawText(const std::string &text,
+				const Vector &position, unsigned int size)
+				noexcept;
+		void		drawRect(const Rect &rect,
+				const Color &color) noexcept;
+		void		drawCircle(const Vector &position,
+				const Color &color, float radius) noexcept;
 	private:
 		void		drawLobbyInfo(const LobbyClient &lobby,
 				const unsigned int &pos_y) noexcept;
 		const IController &_controller;
 		IDisplay	&_displayer;
 		ASceneScreen	&_sceneScreen;
-		ButtonRequest	_request = {"none", nullptr, false};
+		ButtonRequest	_request = {"none", nullptr, false, 0};
 		InputKey	_inputKey = {false, 0, false};
 		Vector		_clickPos = {0, 0};
 	};

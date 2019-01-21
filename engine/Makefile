@@ -27,11 +27,19 @@ SRC 	= GameEngine.cpp				\
 	  component/renderer/ARenderer.cpp		\
 	  component/renderer/SfmlRenderer.cpp		\
 	  component/controller/SfmlController.cpp	\
+	  component/collider/Collider.cpp		\
+	  component/collider/ColliderStatic.cpp		\
 	  script/ScriptObject.cpp			\
 	  script/task/TaskMove.cpp			\
 	  script/task/TaskShoot.cpp			\
 	  script/task/TaskFactory.cpp			\
 	  script/task/TaskObjective.cpp			\
+	  script/task/TaskDirection.cpp			\
+	  translate/Translater.cpp			\
+	  translate/TransSpawn.cpp			\
+	  translate/TransDeath.cpp			\
+	  translate/TransShoot.cpp			\
+	  translate/TransPosition.cpp			\
 	  exception/SceneException.cpp			\
 	  exception/EngineException.cpp			\
 	  exception/ComponentException.cpp		\
@@ -56,8 +64,10 @@ CXXFLAGS	+= -I ../include/engine/utils
 CXXFLAGS	+= -I ../include/engine/component
 CXXFLAGS	+= -I ../include/engine/component/renderer
 CXXFLAGS	+= -I ../include/engine/component/controller
+CXXFLAGS	+= -I ../include/engine/component/collider
 CXXFLAGS	+= -I ../include/engine/script
 CXXFLAGS	+= -I ../include/engine/script/task
+CXXFLAGS	+= -I ../include/engine/translate
 CXXFLAGS	+= -I ../include/engine/exception
 CXXFLAGS	+= -I ../include/engine/display
 CXXFLAGS	+= -I ../include/engine/sceneScreen/

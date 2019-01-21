@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2019
+** RType
+** File description:
+** UdpClient methods
+*/
+
 #include <iostream>
 #include <fstream>
 #include <exception>
@@ -25,11 +32,29 @@ void    UdpClient::setSendMessage(const std::string message) noexcept
     _sendMessage = message;
 }
 
+bool    UdpClient::getInLobby() noexcept
+{
+    return _inLobby;
+}
+
+bool    UdpClient::getInGame() noexcept
+{
+    return _inGame;
+}
+
+bool    UdpClient::getReady() noexcept
+{
+    return _ready;
+}
+
 void    UdpClient::start(udp::resolver::iterator endpointIt)
 {
-    _socket.open(udp::v4());
-    _socket.non_blocking(true);
-    _socket.native_non_blocking(true);
+    if (_socket.is_open() == false) {
+        std::cout << "on ouvre la socket" << std::endl;
+        _socket.open(udp::v4());
+        _socket.non_blocking(true);
+        _socket.native_non_blocking(true);
+    }
     startConnect(endpointIt);
 }
 
@@ -51,14 +76,16 @@ void    UdpClient::startConnect(udp::resolver::iterator endpointIt)
             else if (!code) {
                 std::cout << "Connected to " << endpointIt->endpoint() << std::endl;
                 _serverEndpoint = *endpointIt;
-                if (_inGame == true)
-                    _sendMessage = "GAME SERVER JOINED";
-                else
+                std::cout << "serverEndpoint = " << _serverEndpoint << std::endl;
+                if (_inGame == true) {
+                    std::string message = std::to_string(_myId) + "\n";
+                    _socket.send_to(boost::asio::buffer(message), _serverEndpoint);
+                }
+                else {
                     _sendMessage = "NOUVEAU CLIENT";
-                //startWrite();
-                _socket.send_to(boost::asio::buffer(_sendMessage), _serverEndpoint);
+                    _socket.send_to(boost::asio::buffer(_sendMessage), _serverEndpoint);
+                }
                 makeClientReadWrite();
-                std::cout << "The end?" << std::endl;
             }
         });
     }
@@ -66,13 +93,6 @@ void    UdpClient::startConnect(udp::resolver::iterator endpointIt)
 
 void    UdpClient::makeClientReadWrite() noexcept
 {
-    /*std::thread clientRead([this] {
-        std::cout << "read thread" << std::endl;
-        sleep(0.2);
-        this->startRead();
-    });
-    clientRead.join();*/
-
     startRead();
     std::thread clientWrite([this] {
         this->startWrite();
@@ -92,12 +112,22 @@ void    UdpClient::startWrite()
         return;
     while (_sendMessage.empty() == true);
     if (_sendMessage != "") {
-        _sendMessage += "\n";
-        std::cout << "Avant fail" << std::endl;
-        _socket.send_to(boost::asio::buffer(_sendMessage), _serverEndpoint);
-        std::cout << "Apres" << std::endl;
+        if (_sendMessage.find("\n") == std::string::npos) {
+            _sendMessage += "\n";
+        }
+        try {
+            //std::cout << "ici j'envoie " << _sendMessage;
+            _socket.send_to(boost::asio::buffer(_sendMessage), _serverEndpoint);
+            if (_inGame == true) {
+                _socket.send_to(boost::asio::buffer("0\n"), _serverEndpoint);
+                _sendMessage.clear();
+            }
+        } catch (std::exception &e) {
+            std::cout << e.what() << std::endl;
+        }
     }
-    sleep(0.3);
+    if (_inGame != true)
+        sleep(0.3);
     startWrite();
 }
 
@@ -127,13 +157,18 @@ void    UdpClient::startRead()
 }
 
 void    UdpClient::handleReceive(const boost::system::error_code& error, size_t bytes_transferred) {
-    //std::cout << "Dans handle" << std::endl;
     if (error) {
-        std::cout << "Receive failed: " << error.message() << "\n";
+        std::cout << "Receive failed: " << error.message() << std::endl;
         _isConnected = false;
         return;
     }
     _receiveMessage.at(bytes_transferred - 1) = 0;
+    std::string temp = _receiveMessage.data();
+
+    if (temp.find("GAME START") != temp.npos) {
+        std::cout << "Wollah je dors" << std::endl;
+        sleep(1);
+    }
     //std::cout << "Received: '" << _receiveMessage.data() << "' (" << error.message() << ")\n";
     if (_firstMessage == true) {
         getMyId();
@@ -165,6 +200,9 @@ std::map<std::string, LobbyClient>      &UdpClient::getLobbies() noexcept
 void    UdpClient::manageReceiveMessage()
 {
     std::string message = _receiveMessage.data();
+
+    std::cout << "message = " << message << std::endl;
+    //std::cout << "here 5 : " << message << std::endl;
     if (message.find("LOBBY") != message.npos) {
         manageMyLobby();
         startRead();
@@ -175,9 +213,10 @@ void    UdpClient::manageReceiveMessage()
     else if (_sendMessage.find("LOBBY NEW") != _sendMessage.npos)
         checkCreate();
     if (message.find("GAME START") != message.npos) {
-        _socket.close();
+        //_socket.close();
         _inGame = true;
         udp::resolver resolver(_io);
+        _socket = udp::socket(_io);
         std::cout << "Je dois start la game" << std::endl;
         start(resolver.resolve(udp::resolver::query(udp::v4(), _host, std::to_string(14))));
     }
@@ -194,18 +233,11 @@ void    UdpClient::manageMyLobby()
     message.erase(0, message.find(" ") + 1);
     if (message == "JOIN")
         _myLobby.addClient(clientId);
-    else if (message == "READY")
+    else if (message == "READY") {
         _myLobby.changeClientStatus(clientId);
-    
-    std::cout << "Dans le lobby où je suis (" << _myLobby.getName() << "):" << std::endl;
-    std::vector<ClientInLobby>  clients = _myLobby.getClients();
-    for (unsigned int it = 0; it < clients.size(); it++) {
-        std::cout << "- " << clients.at(it).getId() << " is ";
-        if (clients.at(it).isReady() == true)
-            std::cout << "ready" << std::endl;
-        else
-            std::cout << " not ready" << std::endl;
+        _ready = true;
     }
+    std::vector<ClientInLobby>  clients = _myLobby.getClients();
 }
 
 void    UdpClient::defineAction()
@@ -223,9 +255,7 @@ void    UdpClient::setLobbies()
     int level;
     int maxPlace;
 
-    //std::cout << "nbLobbies = " << nbLobbies << std::endl;
     message.erase(0, message.find(" ") + 1);
-    //std::cout << "message = " << message << std::endl;
     _lobbies.clear();
     for (int it = 0; it < nbLobbies; it++) {
         lobbyName = message.substr(0, message.find(" "));
@@ -236,14 +266,8 @@ void    UdpClient::setLobbies()
         message.erase(0, message.find(" ") + 1);
         maxPlace = std::atoi(message.substr(0, message.find(" ")).c_str());
         message.erase(0, message.find(" ") + 1);
-        //std::cout << "LobbyName = " << lobbyName << ", nbClients = " << nbClients << ", level = " << level << ", maxPlace = " << maxPlace << std::endl;
         _lobbies[lobbyName] = LobbyClient(lobbyName, nbClients, level, maxPlace);
     }
-    /* std::cout << "Voici les lobby que j'ai stock: " << std::endl;
-    for (std::map<std::string, LobbyClient>::iterator it = _lobbies.begin(); it != _lobbies.end(); it++) {
-        std::cout << "- " << it->second.getName() << " " << it->second.getNbClients() << " " << it->second.getLevel() << " " << it->second.getMaxPlace() << std::endl;
-    }
-    std::cout << std::endl; */
 }
 
 void    UdpClient::checkJoin()
@@ -254,9 +278,10 @@ void    UdpClient::checkJoin()
     std::string status;
 
     if (message != "ERROR") {
+        _inLobby = true;
         _sendMessage.erase(0, _sendMessage.find("LOBBY JOIN") + 11);
-        _sendMessage.erase(_sendMessage.end() - 1);
-        std::cout << "lobbyName = " << _sendMessage << std::endl;
+        _sendMessage.erase(std::remove(_sendMessage.begin(),
+        _sendMessage.end(), '\n'), _sendMessage.end());
         _myLobby = _lobbies.find(_sendMessage)->second;
         _myLobby.addClient(_myId, false);
         nbClients = std::atoi(message.substr(0, message.find(" ")).c_str());
@@ -278,7 +303,6 @@ void    UdpClient::checkCreate()
 {
     std::string message = _receiveMessage.data();
 
-    std::cout << "data = " << _receiveMessage.data() << std::endl;
     if (message == "OK") {
         std::string lobbyInfo = _sendMessage.substr(_sendMessage.find("NEW") + 4);
         std::string lobbyName = lobbyInfo.substr(0, lobbyInfo.find(" "));
@@ -286,10 +310,9 @@ void    UdpClient::checkCreate()
         std::string maxPlace;
         
         lobbyLevel = lobbyInfo.substr(lobbyInfo.find(" "));
-        std::cout << "lobbyLevel = " << lobbyInfo << std::endl;
         maxPlace = lobbyInfo.substr(lobbyInfo.find(" ") + 3);
-        std::cout << "maxPlace = " << maxPlace << std::endl;
         _myLobby = LobbyClient(lobbyName, 1, std::atoi(lobbyLevel.c_str()), std::atoi(maxPlace.c_str()));
         _myLobby.addClient(_myId);
+        _inLobby = true;
     }
 }

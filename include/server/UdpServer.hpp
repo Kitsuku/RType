@@ -1,3 +1,10 @@
+//
+// EPITECH PROJECT, 2019
+// RType
+// File description:
+// UdpServer class declaration
+//
+
 #ifndef UDPSERVER_HPP
 	# define UDPSERVER_HPP
 
@@ -14,6 +21,7 @@
 	#include "Client.hpp"
 	#include "Lobby.hpp"
 	#include "Game.hpp"
+	#include "GameEngine.hpp"
 
 	using boost::asio::ip::udp;
 
@@ -49,17 +57,21 @@
 		udp::socket	_gameSocket;
 
 	private:
-		void startReceive();
+		void	startReceive();
+		void	sendMessageInGame(std::string, unsigned int);
+		void	clientNewEndpoint() noexcept;
+		Game	*getClientGame(Client) noexcept;
 
 		udp::endpoint	_remoteEndpoint;
 		udp::endpoint	_gameRemoteEndpoint;
-		char _buffer[1000];
-		char	_gameBuffer[1000];
+		char _buffer[BUFFSIZE];
+		char	_gameBuffer[BUFFSIZE];
 		std::map<udp::endpoint, Client>	_clients;
 		std::mutex	_lock;
 		std::mutex	_gameLock;
 		std::map<std::string, Lobby>	_lobbies;
 		std::vector<Game>	_games;
+		Engine::GameEngine	_gameEngine;
 		int	_clientId = 0;
 	};
 

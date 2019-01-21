@@ -59,3 +59,8 @@ void	ScriptObject::transfert(ScriptObject &obj) noexcept
 	obj.setTasks(_tasks);
 	_tasks.clear();
 }
+
+void	ScriptObject::clear() noexcept
+{
+	_tasks.clear();
+}

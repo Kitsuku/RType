@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Screen.hpp"
 #include "DisplayException.hpp"
+#include "MasterClient.hpp"
 
 using Engine::Screen;
 
@@ -109,10 +110,42 @@ void		Screen::addButton(const Rect &buttonPositon,
 	_sceneScreen.addButton(Engine::Button(buttonPositon, buttonRequest));
 }
 
+void		Screen::setBackInitialButtons() noexcept
+{
+	_sceneScreen.setBackInitialButtons();
+}
+
+void		Screen::addLobbyButtons(std::map<std::string,
+		LobbyClient> &lobbies) noexcept
+{
+	std::map<std::string, LobbyClient>::iterator	it;
+	unsigned int					pos_y = 0;
+	unsigned int					nbrInitialButton;
+
+	if (!lobbies.empty()) {
+		_sceneScreen.setBackInitialButtons();
+		nbrInitialButton = _sceneScreen.getInitialNbrButtons();
+		it = lobbies.begin();
+		while (it != lobbies.end() && pos_y < 6) {
+			_sceneScreen.addButton(
+			{775, 230 + pos_y * 80, 900, 60},
+			{it->second.getName(), &MasterClient::selectLobby,
+			true, nbrInitialButton + pos_y + 1});
+			++it;
+			++pos_y;
+		}
+	}
+}
+
 void		Screen::setButtons(std::vector<Button> buttons)
 		noexcept
 {
 	_sceneScreen.setButtons(buttons);
+}
+
+unsigned short	Screen::getInitialNbrButtons() const noexcept
+{
+	return _sceneScreen.getInitialNbrButtons();
 }
 
 Engine::ARenderer	*Screen::createRenderer(
@@ -154,7 +187,7 @@ void			Screen::refreshWindow() noexcept
 void		Screen::displayLobbiesPlayer(std::map<std::string,
 					LobbyClient> lobbies) noexcept
 {
-	std::map<std::string, LobbyClient>::iterator	it;// = lobbies.begin();
+	std::map<std::string, LobbyClient>::iterator	it;
 	std::string					text;
 	unsigned int					pos_y = 0;
 
@@ -162,17 +195,6 @@ void		Screen::displayLobbiesPlayer(std::map<std::string,
 		it = lobbies.begin();
 		while (it != lobbies.end() && pos_y < 6) {
 			drawLobbyInfo(it->second, pos_y);
-/* 			text = "Level : " + std::to_string(it->second.getLevel());
-			_displayer.drawBox({775, 230 + pos_y * 80, 900, 60});
-			_displayer.drawText(text,
-			Engine::Vector(785, 240 + pos_y * 80), 35);
-			text = "Name : " + it->second.getName();
-			_displayer.drawText(text,
-			Engine::Vector(1100, 240 + pos_y * 80), 35);
-			text = std::to_string(it->second.getNbClients()) + "/"
-			+ std::to_string(it->second.getMaxPlace());
-			_displayer.drawText(text,
-			Engine::Vector(1600, 255 + pos_y * 80), 27); */
 			++it;
 			++pos_y;
 		}
@@ -200,4 +222,21 @@ void		Screen::drawLobbyInfo(const LobbyClient &lobby,
 	+ std::to_string(lobby.getMaxPlace());
 	_displayer.drawText(text,
 	Engine::Vector(1600, 255 + pos_y * 80), 27);
+}
+
+void		Screen::drawText(const std::string &text,
+		const Vector &position, unsigned int size) noexcept
+{
+	_displayer.drawText(text, position, size);
+}
+
+void		Screen::drawRect(const Rect &rect, const Color &color) noexcept
+{
+	_displayer.drawRect(rect, color);
+}
+
+void		Screen::drawCircle(const Vector &position,
+		const Color &color, float radius) noexcept
+{
+	_displayer.drawCircle(position, color, radius);
 }

@@ -15,6 +15,7 @@
 #include "ScriptedComponent.hpp"
 #include "SfmlController.hpp"
 #include "exception/ComponentException.hpp"
+#include "TaskDirection.hpp"
 #include "TaskObjective.hpp"
 #include "TaskShoot.hpp"
 #include "TaskMove.hpp"
@@ -25,6 +26,7 @@
 #include "MenuScreen.hpp"
 #include "Screen.hpp"
 #include "Launcher.hpp"
+#include "ColliderStatic.hpp"
 
 void	setActor(std::ostream &stream, const std::vector<std::string> &path)
 {
@@ -54,39 +56,16 @@ void	appear(std::ostream &s, Engine::SceneApparition &app,
 }
 
 /* int main()
+int main()
 {
-	Engine::SfmlDisplay *disp = new Engine::SfmlDisplay;
-	Engine::GameEngine engine(disp);
-	Engine::ScriptObject script;
-	Engine::SceneApparition	a, b, c, d, e, last;
-	Engine::ScriptObject so;
-	std::vector<std::string> paths = {"Plane.so", "Alien.so"};
+	Engine::GameEngine engine(new Engine::SfmlDisplay);
+	Engine::ColliderStatic	*box = new Engine::ColliderStatic(Engine::Vector(0, 0),
+								Engine::Vector(1200, 1000));
 
-	a.actor.actor = 0;
-	b.actor.actor = 0;
-	c.actor.actor = 1; c.delta = 1000; c.actor.transform.place(Engine::Vector(800, 600));
-	d.actor.actor = 0; d.delta = 2000; d.actor.transform.place(Engine::Vector(800, 800));
-	e.actor.actor = 0; e.delta = 5000; e.actor.objective = true;
-	last.actor.actor = -1; last.delta = -1;
-	std::ofstream	f;
-	f.open("plop.scn", std::ios::binary);
-	setActor(f, paths);
-	appear(f, a);
-	appear(f, b);
-	so.addTask(std::make_unique<Engine::TaskShoot>(Engine::Vector(0, 600)));
-	so.addTask(std::make_unique<Engine::TaskShoot>(Engine::Vector(0, 600)));
-	so.addTask(std::make_unique<Engine::TaskShoot>(Engine::Vector(0, 600)));
-	//so.addTask(std::make_unique<Engine::TaskObjective>(Engine::Vector(100,100)));
-	//so.addTask(std::make_unique<Engine::TaskMove>(Engine::Vector(7,8)));
-	appear(f, c, &so);
-	appear(f, d);
-	//so.addTask(std::make_unique<Engine::TaskObjective>(Engine::Vector(3,3)));
-	appear(f, e, &so);
-	appear(f, e);
-	appear(f, last); f.close();
-
+	//build_level_one();
+	engine.setBoundingBox(box);
 	engine.open();
-	engine.playScene("plop.scn");
+	engine.playScene("level00.scn", EngineDura(0.1));
 	return 0;
 } */
 

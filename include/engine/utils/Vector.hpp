@@ -15,11 +15,12 @@ namespace Engine {
         class Vector {
         public:
                 // Ctor & Dtor
-                Vector(std::ifstream &stream);
+                Vector(std::istream &stream);
                 Vector(float x = 0.0, float y = 0.0);
                 ~Vector();
                 // Operator
                 const Vector    &operator+=(const Vector &other) noexcept;
+                const Vector    &operator*=(float coef) noexcept;
                 const Vector    &operator=(const Vector &other) noexcept;
                 bool            operator==(const Vector &other)
                                                         const noexcept;

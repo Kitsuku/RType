@@ -1,3 +1,10 @@
+//
+// EPITECH PROJECT, 2019
+// RType
+// File description:
+// UdpClient class declaration
+//
+
 #ifndef UDPCLIENT_HPP_
     # define UDPCLIENT_HPP_
 
@@ -16,6 +23,9 @@
     std::map<std::string, LobbyClient>      &getLobbies() noexcept;
     void    setLobbies();
     void    setSendMessage(const std::string mesage) noexcept;
+    bool    getInLobby() noexcept;
+    bool    getInGame() noexcept;
+    bool    getReady() noexcept;
 
     private:
     void    startConnect(udp::resolver::iterator);

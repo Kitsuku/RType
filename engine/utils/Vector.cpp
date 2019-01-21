@@ -10,7 +10,7 @@
 using Engine::Vector;
 
 // Ctor & Dtor
-Vector::Vector(std::ifstream &stream)
+Vector::Vector(std::istream &stream)
 {
 	stream.read(reinterpret_cast<char*>(&_x), sizeof(_x));
 	stream.read(reinterpret_cast<char*>(&_y), sizeof(_y));
@@ -29,6 +29,13 @@ const Vector    &Vector::operator+=(const Vector &other) noexcept
 {
         _x += other.getX();
         _y += other.getY();
+        return *this;
+}
+
+const Vector    &Vector::operator*=(float coef) noexcept
+{
+        _x *= coef;
+        _y *= coef;
         return *this;
 }
 

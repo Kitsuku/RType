@@ -10,6 +10,7 @@
 #include "TaskMove.hpp"
 #include "TaskShoot.hpp"
 #include "TaskObjective.hpp"
+#include "TaskDirection.hpp"
 
 using Engine::TaskFactory;
 
@@ -19,6 +20,7 @@ TaskFactory::TaskFactory()
 	_functions[0] = &TaskFactory::makeMove;
 	_functions[1] = &TaskFactory::makeObjective;
 	_functions[2] = &TaskFactory::makeShoot;
+	_functions[3] = &TaskFactory::makeDirection;
 }
 
 TaskFactory::~TaskFactory()
@@ -62,4 +64,10 @@ TaskFactory::uITask	TaskFactory::makeShoot(std::ifstream &stream)
 const
 {
 	return std::make_unique<TaskShoot>(stream);
+}
+
+TaskFactory::uITask	TaskFactory::makeDirection(std::ifstream &stream)
+const
+{
+	return std::make_unique<TaskDirection>(stream);
 }

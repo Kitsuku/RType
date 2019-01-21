@@ -7,6 +7,8 @@
 
 #include "ScriptedComponent.hpp"
 #include "TaskObjective.hpp"
+#include "TaskDirection.hpp"
+#include "TransShoot.hpp"
 
 using Engine::Component;
 
@@ -36,6 +38,8 @@ Component::~Component()
 		delete _bullet;
 	if (_brain != nullptr)
 		delete _brain;
+	if (_collider != nullptr)
+		delete _collider;
 }
 
 // Setter
@@ -60,6 +64,11 @@ void	Component::setBrain(Engine::IBrain *brain) noexcept
 void	Component::setBullet(Engine::PreComponent *bullet) noexcept
 {
 	_bullet = bullet;
+}
+
+void	Component::setCollider(Engine::ICollider *collider) noexcept
+{
+	_collider = collider;
 }
 
 void	Component::setARenderer(Engine::ARenderer *renderer) noexcept
@@ -93,6 +102,16 @@ Engine::Transform	&Component::getTransform() noexcept
 	return _transform;
 }
 
+const Engine::Feature	&Component::getFeature() const noexcept
+{
+	return _feature;
+}
+
+const Engine::ICollider	*Component::getCollider() const noexcept
+{
+	return _collider;
+}
+
 const Engine::Transform	&Component::getTransform() const noexcept
 {
 	return _transform;
@@ -112,27 +131,32 @@ void	Component::doTick()
 
 void	Component::onColliding(IComponent &compo)
 {
-	if (_friendly != compo.isFriendly())
-		compo.getFeature().damage(_feature.getDamages());
+	compo.getFeature().damage(_feature.getDamages());
 }
 
-void	Component::shoot(const Engine::Vector &target) const
+void	Component::shoot(const Engine::Vector &target, bool dir) const
 {
 	Engine::ScriptedComponent	*compo;
+	Engine::ScriptObject::Task	task;
 
 	if (_bullet == nullptr)
 		return;
 	compo = new Engine::ScriptedComponent(_engine, _transform,
 							_friendly);
-	compo->getScript().addTask(
-		std::make_unique<Engine::TaskObjective>(target));
+	if (dir)
+		task = std::make_unique<Engine::TaskDirection>(target);
+	else
+		task = std::make_unique<Engine::TaskObjective>(target);
+	compo->getScript().addTask(std::move(task));
 	_engine.createComponent(Engine::GameEngine::Element(compo),
-					*_bullet, nullptr);
+					*_bullet);
+	_engine.translater->addAction(std::make_unique<Engine::TransShoot>
+					(this->getID(), target));
 }
 
 // Extern operator
 std::ostream	&operator<<(std::ostream &stream,
-			const Engine::Component &target)
+			const Engine::IComponent &target)
 			noexcept
 {
 	stream << "[Component] " << target.getTransform();

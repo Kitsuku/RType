@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2019
+** RType
+** File description:
+** Lobby methods
+*/
+
 #include "Lobby.hpp"
 
 using boost::asio::ip::udp;

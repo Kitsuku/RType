@@ -16,7 +16,7 @@ namespace Engine {
 
 	#include "ScriptObject.hpp"
 
-	#define NB_TASK		3
+	#define NB_TASK		4
 
 namespace Engine {
 	class TaskFactory {
@@ -36,6 +36,7 @@ namespace Engine {
 		uITask	makeMove(std::ifstream &stream) const;
 		uITask	makeObjective(std::ifstream &stream) const;
 		uITask	makeShoot(std::ifstream &stream) const;
+		uITask	makeDirection(std::ifstream &stream) const;
 		// Attribut
 		std::array<f, NB_TASK>	_functions;
 	};

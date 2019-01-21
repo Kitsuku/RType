@@ -1,3 +1,10 @@
+//
+// EPITECH PROJECT, 2019
+// RType
+// File description:
+// Lobby class declaration
+//
+
 #ifndef LOBBY_HPP_
     # define LOBBY_HPP_
 

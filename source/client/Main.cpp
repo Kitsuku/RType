@@ -1,3 +1,9 @@
+/*
+** EPITECH PROJECT, 2019
+** RType
+** File description:
+** Main of rtype client (test)
+*/
 
 #include <iostream>
 #include <boost/asio.hpp>

@@ -10,8 +10,8 @@
 
 using Engine::MenuScreen;
 
-MenuScreen::MenuScreen(const Engine::Transform &transform, const bool scrollable):
-ASceneScreen(transform, scrollable)
+MenuScreen::MenuScreen(const Engine::Transform &transform,
+const bool scrollable): ASceneScreen(transform, scrollable)
 {
 	initButtons();
 }
@@ -31,9 +31,10 @@ MenuScreen::~MenuScreen()
 void	MenuScreen::initButtons() noexcept
 {
 	_buttons.push_back(Engine::Button({692, 485, 520, 95},
-	{"joinGame", &MasterClient::goToJoinGame, true}));
+	{"joinGame", &MasterClient::goToJoinGame, true, 0}));
 	_buttons.push_back(Engine::Button({692, 627, 520, 95},
-	{"create", &MasterClient::goToCreateGame, true}));
+	{"create", &MasterClient::goToCreateGame, true, 1}));
 	_buttons.push_back(Engine::Button({692, 768, 520, 95},
-	{"exit", &MasterClient::exit, true}));
+	{"exit", &MasterClient::exit, true, 2}));
+	_initialNbrButtons = 3;
 }

@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2019
+** RType
+** File description:
+** ClientManager methods
+*/
+
 #include <thread>
 #include "ClientManager.hpp"
 
@@ -5,7 +12,6 @@ ClientManager::ClientManager(UdpServer *udpServer, std::size_t &bytesTransferred
     : _udpServer(udpServer), _bytesTransferred(bytesTransferred)
 {
     _clientMessage = _udpServer->getBuffer();
-    std::cout << "Dans construc : " << _clientMessage << std::endl;
     _clientEndpoint = _udpServer->getEndpoint();
     initPtr();
     std::thread myThread([this] () {
@@ -40,9 +46,10 @@ void    ClientManager::addClient()
     _udpServer->addClient(Client(_clientEndpoint.address().to_string(), _clientEndpoint.port(), _clientEndpoint, _udpServer->getClientId()));
     _udpServer->_socket.async_send_to(boost::asio::buffer(message), _clientEndpoint,
         [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
+            if (error || bytesTransferred == 0)
+                std::cerr << "Error when sending a message to client (addClient)" << std::endl;
         });
     _udpServer->incrClientId();
-    //lobbiesInfo();
 }
 
 udp::endpoint   ClientManager::getEndpoint()
@@ -55,6 +62,8 @@ bool    ClientManager::isLobbyCommand()
     if (_clientMessage.find("LOBBY") == _clientMessage.npos) {
         _udpServer->_socket.async_send_to(boost::asio::buffer("UNKNOWN COMMAND\n"), _clientEndpoint,
         [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
+            if (error || bytesTransferred == 0)
+                std::cerr << "Error when sending a message to client (isLobbyCommand)" << std::endl;
         });
         return false;
     }
@@ -72,6 +81,8 @@ void    ClientManager::manageLobbies()
         if (pos == std::string::npos)
             _udpServer->_socket.async_send_to(boost::asio::buffer("UNKNOWN COMMAND\n"), _clientEndpoint,
             [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
+                if (error || bytesTransferred == 0)
+                    std::cerr << "Error when sending a message to client (addClient)" << std::endl;
             });
         else
             ((*this).*_lobbyFunctions.at(it - 1))();
@@ -90,8 +101,10 @@ void    ClientManager::lobbiesInfo()
     }
     oss << std::endl;
     _udpServer->_socket.async_send_to(boost::asio::buffer(oss.str()), _clientEndpoint,
-            [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
-            });
+    [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
+        if (error || bytesTransferred == 0)
+            std::cerr << "Error when sending a message to client (lobbiesInfo)" << std::endl;
+    });
 }
 
 void    ClientManager::createLobby()
@@ -105,9 +118,7 @@ void    ClientManager::createLobby()
 
     if (lobbyInfo.find(" ") + 1 < lobbyInfo.size()) {
         lobbyLevel = lobbyInfo.substr(lobbyInfo.find(" "));
-        std::cout << "lobbyLevel = " << lobbyInfo << std::endl;
         maxPlace = lobbyInfo.substr(lobbyInfo.find(" ") + 3);
-        std::cout << "maxPlace = " << maxPlace << std::endl;
         if (std::atoi(lobbyLevel.c_str()) <= 0 || isNameTaken(lobbyName) == true ||
             std::atoi(maxPlace.c_str()) <= 0 || std::atoi(maxPlace.c_str()) > 4)
             message = "ERROR\n";
@@ -120,6 +131,8 @@ void    ClientManager::createLobby()
         message = "UNKNOW COMMAND\n";
     _udpServer->_socket.async_send_to(boost::asio::buffer(message), _clientEndpoint,
         [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
+            if (error || bytesTransferred == 0)
+                std::cerr << "Error when sending a message to client (addClient)" << std::endl;
         });
 }
 
@@ -128,15 +141,18 @@ void    ClientManager::joinLobby()
     std::map<std::string, Lobby>    lobbies = _udpServer->getLobbies();
     std::string message = "ERROR\n";
     std::string lobbyName = _clientMessage.substr(_clientMessage.find("JOIN") + 5);
+    bool    inLobby = isClientInLobby();
 
-    std::cout << lobbyName << std::endl;
-    if (isNameTaken(lobbyName) == true && clientsInLobby(lobbyName) < 4) {
+    if (isNameTaken(lobbyName) == true && clientsInLobby(lobbyName) < 4
+    && inLobby != true) {
         _udpServer->addClientInLobby(lobbyName, _clientEndpoint);
         sendMessageInLobby("JOIN");
         getClientsInLobbyInformations(message);
     }
     _udpServer->_socket.async_send_to(boost::asio::buffer(message), _clientEndpoint,
         [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
+            if (error || bytesTransferred == 0)
+                std::cerr << "Error when sending a message to client (addClient)" << std::endl;
         });
 }
 
@@ -147,7 +163,6 @@ void    ClientManager::setStart()
     bool    readyStatus;
     Lobby   clientLobby;
     std::string message = "ERROR\n";
-    unsigned int    it = 0;
 
     if ((inLobby == true && clientStatus.compare("READY") == 0) ||
         (inLobby == true && clientStatus.compare("UNREADY") == 0)) {
@@ -158,8 +173,8 @@ void    ClientManager::setStart()
                 readyStatus = false;
             _udpServer->changeClientStatus(readyStatus);
             if (_udpServer->clientsAreReady() == true) {
-                _udpServer->addGame();
                 sendMessageInLobby("GAME START");
+                _udpServer->addGame();
                 message = "GAME START\n";
             }
             else
@@ -167,6 +182,8 @@ void    ClientManager::setStart()
     }
     _udpServer->_socket.async_send_to(boost::asio::buffer(message), _clientEndpoint,
         [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
+            if (error || bytesTransferred == 0)
+                std::cerr << "Error when sending a message to client (addClient)" << std::endl;
         });
 }
 
@@ -225,8 +242,12 @@ void    ClientManager::sendMessageInLobby(std::string information)
 
     for (unsigned int it = 0; it < clients.size(); it++) {
         if (clients.at(it).getEndpoint() != _clientEndpoint) {
+            std::cout << "Envoie d'un message au client " << it << " du lobby " << lobby.getName() 
+                    << "le message est: " << information << ")";
             _udpServer->_socket.async_send_to(boost::asio::buffer(message), clients.at(it).getEndpoint(),
             [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
+                if (error || bytesTransferred == 0)
+                    std::cerr << "Error when sending a message to client (addClient)" << std::endl;
             });
         }
     }

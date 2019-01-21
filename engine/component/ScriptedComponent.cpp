@@ -52,6 +52,6 @@ void	ScriptedComponent::doTick()
 		_brain->doTick();
 	try {
 		_script.executeTask(*this);
-	} catch (const Engine::ComponentException e) {
+	} catch (const Engine::ComponentException &e) {
 	}
 }

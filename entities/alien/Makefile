@@ -21,6 +21,7 @@ CXXFLAGS	+= -I ../../include/engine
 CXXFLAGS	+= -I ../../include/engine/utils
 CXXFLAGS	+= -I ../../include/engine/display
 CXXFLAGS	+= -I ../../include/engine/component
+CXXFLAGS	+= -I ../../include/engine/component/collider
 CXXFLAGS	+= -I ../../include/engine/component/renderer
 
 LDFLAGS		= -shared -Wl,-export-dynamic

@@ -10,6 +10,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/engine
 			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/utils
 			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/component/renderer
 			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/component/controller
+			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/component/collider
 			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/script
 			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/script/task
 			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/exception
@@ -21,7 +22,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/engine
 			${CMAKE_CURRENT_SOURCE_DIR}/include/client
 			${CMAKE_CURRENT_SOURCE_DIR}/include/masterClient
 			${CMAKE_CURRENT_SOURCE_DIR}/include/
-			${CMAKE_CURRENT_SOURCE_DIR}/include/engine)
+			${CMAKE_CURRENT_SOURCE_DIR}/include/engine
+			${CMAKE_CURRENT_SOURCE_DIR}/include/engine/translate)
 
 set(CMAKE_CXX_FLAGS "-ldl -W -Wall -Wextra -g")
 
@@ -32,6 +34,8 @@ add_library(engine STATIC engine/GameEngine.cpp
 			   engine/sceneScreen/MenuScreen.cpp
 			   engine/sceneScreen/ChannelScreen.cpp
 			   engine/sceneScreen/CreateLobbyScreen.cpp
+			   engine/sceneScreen/LobbyScreen.cpp
+			   engine/sceneScreen/LevelScreen.cpp
 			   engine/sceneScreen/ASceneScreen.cpp
 			   engine/sceneScreen/Button.cpp
 			   engine/utils/Vector.cpp
@@ -40,7 +44,10 @@ add_library(engine STATIC engine/GameEngine.cpp
 			   engine/component/renderer/ARenderer.cpp
 			   engine/component/renderer/SfmlRenderer.cpp
 			   engine/component/controller/SfmlController.cpp
+			   engine/component/collider/Collider.cpp
+			   engine/component/collider/ColliderStatic.cpp
 			   engine/script/ScriptObject.cpp
+			   engine/script/task/TaskDirection.cpp
 			   engine/script/task/TaskMove.cpp
 			   engine/script/task/TaskShoot.cpp
 			   engine/script/task/TaskFactory.cpp
@@ -54,11 +61,16 @@ add_library(engine STATIC engine/GameEngine.cpp
 			   engine/scene/SceneLoader.cpp
 			   engine/scene/ActorLoader.cpp
 			   engine/screen/Screen.cpp
+			   engine/translate/TransDeath.cpp
+			   engine/translate/Translater.cpp
+			   engine/translate/TransPosition.cpp
+			   engine/translate/TransShoot.cpp
+			   engine/translate/TransSpawn.cpp
 			   source/masterClient/MasterClient.cpp
 	  		   source/client/UdpClient.cpp
 	  		   source/client/LobbyClient.cpp
 	  		   source/client/ClientInLobby.cpp
-	  		   source/Launcher.cpp)
+	 		   source/Launcher.cpp)
 
 add_executable(rtype-server source/server/Main.cpp
 	source/server/UdpServer.cpp
@@ -71,6 +83,7 @@ add_executable(rtype-client source/Main.cpp
 	source/client/UdpClient.cpp
 	source/client/LobbyClient.cpp
 	source/client/ClientInLobby.cpp)
+
 target_link_libraries(rtype-client ${CONAN_LIBS} engine)
 
-target_link_libraries(rtype-server ${CONAN_LIBS})
+target_link_libraries(rtype-server ${CONAN_LIBS} engine)

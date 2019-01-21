@@ -33,6 +33,8 @@ void	SfmlDisplay::createWindow(bool fullscreen, const std::string &name)
 		_window.create(sf::VideoMode::getDesktopMode(), name,
 		sf::Style::Titlebar | sf::Style::Close);
 	}
+	_winSize.setX(static_cast<float>(_window.getSize().x));
+	_winSize.setY(static_cast<float>(_window.getSize().y));
 }
 
 void	SfmlDisplay::createWindow(unsigned int width, unsigned height,
@@ -195,6 +197,29 @@ void		SfmlDisplay::closeWindow() noexcept
 	_window.close();
 }
 
+void		SfmlDisplay::drawRect(const Rect &rect, const Color &color)
+		noexcept
+{
+	sf::RectangleShape	rectangle;
+
+	rectangle.setSize(sf::Vector2f(rect.width, rect.height));
+	rectangle.setFillColor(sf::Color(color.red, color.green, color.blue,
+	color.alpha));
+	rectangle.setPosition(rect.pos_x, rect.pos_y);
+	_window.draw(rectangle);
+}
+
+void		SfmlDisplay::drawCircle(const Vector &position,
+		const Color &color, float radius) noexcept
+{
+	sf::CircleShape	circle(radius);
+
+	circle.setPosition(position.getX(), position.getY());
+	circle.setFillColor(sf::Color(color.red, color.green, color.blue,
+	color.alpha));
+	_window.draw(circle);
+}
+
 // Private method
 void	SfmlDisplay::createRenderState(
 			const Engine::Transform &transform)
@@ -204,7 +229,8 @@ void	SfmlDisplay::createRenderState(
 	Engine::Vector	scale = transform.getScale();
 	sf::Transform	sfTransform;
 
-	sfTransform.translate(position.getX(), position.getY());
+	sfTransform.translate(position.getX() * _winSize.getX() / 1000,
+				position.getY() * _winSize.getY() / 1050);
 	sfTransform.rotate(rotation.getX());
 	sfTransform.scale(scale.getX(), scale.getY());
 	_renderStates.transform = sfTransform;

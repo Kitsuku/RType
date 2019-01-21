@@ -35,14 +35,22 @@ public:
 	void			exit() noexcept;
 	void			refreshLobby() noexcept;
 	void			joinLobby() noexcept;
+	void			selectLobby() noexcept;
 	void			setNbrPlayers() noexcept;
 	void			setGameNbr() noexcept;
 	void			validateCreation() noexcept;
 	void			back() noexcept;
+	void			play() noexcept;
 private:
 	void			changeSceneScreen(unsigned int id) noexcept;
 	void			pressButton(const Engine::Vector &) noexcept;
 	void			displayScreen() noexcept;
+	void			displayCreateLobbyName(const InputKey &key)
+				noexcept;
+	void			displaySelectionCreateLobby() noexcept;
+	void			displaySelectJoinLobby() noexcept;
+	void			drawLobby() noexcept;
+	void			refreshInGame() noexcept;
 	const std::string	&_path;
 	Engine::Screen		&_screen;
 	UdpClient		&_udpClient;
@@ -53,9 +61,15 @@ private:
 								_sceneScreens;
 	std::vector<unsigned int>	_sceneScreenIdOrder;
 	unsigned int			_currentScreenId = 0;
-	unsigned int			_nbrPlayers = 1;
-	unsigned int			_gameNbr = 1;
+	unsigned int			_nbrPlayers = 0;
+	unsigned int			_gameNbr = 0;
+	unsigned int			_refreshTimer = 0;
+	unsigned int			_playerNbr = 1;
+	unsigned short			_nbrJoinLobbyButton = 0;
 	std::string			_buttonNameClicked = "none";
+	std::string			_lobbyName = "";
+	std::string			_selectedLobbyName = "";
+	bool				_inGame = false;
 };
 
 #endif /* !MASTERCLIENT_HPP_ */

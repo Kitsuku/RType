@@ -10,8 +10,8 @@
 
 using Engine::CreateLobbyScreen;
 
-CreateLobbyScreen::CreateLobbyScreen(const Engine::Transform &transform, const bool scrollable):
-ASceneScreen(transform, scrollable)
+CreateLobbyScreen::CreateLobbyScreen(const Engine::Transform &transform,
+const bool scrollable): ASceneScreen(transform, scrollable)
 {
 	initButtons();
 }
@@ -31,21 +31,22 @@ CreateLobbyScreen::~CreateLobbyScreen()
 void	CreateLobbyScreen::initButtons() noexcept
 {
 	_buttons.push_back(Engine::Button({405, 405, 205, 205},
-	{"1 player(s)", &MasterClient::setNbrPlayers, true}));
+	{"1 player(s)", &MasterClient::setNbrPlayers, true, 0}));
 	_buttons.push_back(Engine::Button({705, 405,  205, 205},
-	{"2 player(s)", &MasterClient::setNbrPlayers, true}));
+	{"2 player(s)", &MasterClient::setNbrPlayers, true, 1}));
 	_buttons.push_back(Engine::Button({1005, 405,  205, 205},
-	{"3 player(s)", &MasterClient::setNbrPlayers, true}));
+	{"3 player(s)", &MasterClient::setNbrPlayers, true, 2}));
 	_buttons.push_back(Engine::Button({1305, 405,  205, 205},
-	{"4 player(s)", &MasterClient::setNbrPlayers, true}));
+	{"4 player(s)", &MasterClient::setNbrPlayers, true, 3}));
 	_buttons.push_back(Engine::Button({305, 730,  320, 205},
-	{"1 game 1", &MasterClient::setGameNbr, true}));
+	{"1 game 1", &MasterClient::setGameNbr, true, 4}));
 	_buttons.push_back(Engine::Button({685, 730, 320, 205},
-	{"2 game 2", &MasterClient::setGameNbr, true}));
+	{"2 game 2", &MasterClient::setGameNbr, true, 5}));
 	_buttons.push_back(Engine::Button({1065, 730, 320, 205},
-	{"3 game 3", &MasterClient::setGameNbr, true}));
-	_buttons.push_back(Engine::Button({1400, 735, 300, 55},
-	{"validate", &MasterClient::validateCreation, true}));
+	{"3 game 3", &MasterClient::setGameNbr, true, 6}));
+	_buttons.push_back(Engine::Button({1400, 735, 300, 65},
+	{"validate", &MasterClient::validateCreation, true, 7}));
 	_buttons.push_back(Engine::Button({1400, 865, 300, 65},
-	{"back", &MasterClient::back, true}));
+	{"back", &MasterClient::back, true, 8}));
+	_initialNbrButtons = 9;
 }

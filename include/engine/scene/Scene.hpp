@@ -27,9 +27,13 @@ namespace Engine {
 		// Method
 		const SceneApparition	readAction();
 		void			openFile(const std::string &path);
+		void			loadFromStream(std::istream &stream)
+								noexcept;
+		void			serializeActors(std::ostream &stream)
+								const;
 	private:
 		// Private method
-		void		readActors();
+		void		readActors(std::istream &stream);
 		ScriptObject	*readScript();
 		void		addActor(unsigned int size);
 		// Attribut

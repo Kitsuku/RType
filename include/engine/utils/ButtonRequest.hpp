@@ -15,6 +15,7 @@ struct ButtonRequest {
 	std::string		buttonName;
 	fptrButton		fptr;
 	bool			needRequest;
+	unsigned int		nbrButton;
 };
 
 using ButtonRequest = struct ButtonRequest;

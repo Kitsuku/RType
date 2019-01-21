@@ -1,3 +1,10 @@
+//
+// EPITECH PROJECT, 2019
+// RType
+// File description:
+// ClientManager class declaration
+//
+
 #ifndef CLIENTMANAGER_HPP_
     # define CLIENTMANAGER_HPP_
 

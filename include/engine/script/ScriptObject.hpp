@@ -34,6 +34,7 @@ namespace Engine {
 		void	executeTask(IComponent &compo);
 		void	addTask(Task &&task) noexcept;
 		void	transfert(ScriptObject &obj) noexcept;
+		void	clear() noexcept;
 	private:
 		std::vector<Task>	_tasks;
 	};

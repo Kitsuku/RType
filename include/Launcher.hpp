@@ -29,13 +29,19 @@ private:
 	void			instantiateMaster(Engine::Screen &screen,
 				UdpClient &udpClient,
 				Engine::GameEngine &gameEngine)	noexcept;
-	void			setSceneScreenRenderer(Engine::Screen &screen,
-				std::unordered_map
-				<unsigned int, Engine::ASceneScreen &>
-				&sceneScreens) noexcept;
+	void			insertOtherScreen(Engine::Screen
+				&screen, UdpClient &udpClient,
+				Engine::GameEngine &gameEngine)
+				noexcept;
+	void			setSceneScreenRenderer(Engine::Screen &screen)
+				noexcept;
+	void			setLevelRenderer(Engine::Screen &screen)
+				noexcept;
 	const char		**_args;
 	Engine::IController	&_controller;
 	Engine::IDisplay	&_displayer;
+	std::unordered_map <unsigned int, Engine::ASceneScreen &>
+				_sceneScreens;
 	bool		_error = false;
 };
 

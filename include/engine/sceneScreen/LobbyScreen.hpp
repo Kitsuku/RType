@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2018
 ** R-type
 ** File description:
-** LobbyScreen header to display screen with buttons
+** 
 */
 
 #ifndef LOBBYSCREEN_HPP_
@@ -12,8 +12,8 @@
 
 namespace Engine {
 	class LobbyScreen: public ASceneScreen {
+	// CTOR && DTOR
 	public:
-		// CTOR && DTOR
 		LobbyScreen(const Engine::Transform &transform,
 		const bool scrollable = false);
 		LobbyScreen(Engine::ARenderer *renderer,

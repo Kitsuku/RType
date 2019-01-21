@@ -27,6 +27,6 @@ extern "C" {
 		ret.bullet->rectangle.pos_y = 58;
 		ret.bullet->rectangle.width = 65;
 		ret.bullet->rectangle.height = 18;
-		return (ret);
+		return ret;
 	}
 }

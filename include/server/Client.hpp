@@ -1,3 +1,10 @@
+//
+// EPITECH PROJECT, 2019
+// RType
+// File description:
+// Client class declaration
+//
+
 #ifndef CLIENT_HPP_
     # define CLIENT_HPP_
 
@@ -11,11 +18,12 @@
             Client(std::string, unsigned short, boost::asio::ip::udp::endpoint, int);
 
             const std::string getAddress() const;
-            const unsigned short  getPort() const;
+            unsigned short  getPort() const;
             
             void    setMessage(std::string);
             const std::string getMessage() const;
             boost::asio::ip::udp::endpoint  getEndpoint() const;
+            void    setEndpoint(boost::asio::ip::udp::endpoint) noexcept;
             void    setReady(bool);
             bool    getReady() const;
             int     getId() const;

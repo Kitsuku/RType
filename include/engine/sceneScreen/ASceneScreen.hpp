@@ -32,6 +32,7 @@ namespace Engine {
 		const Transform		&getTransform() const noexcept;
 		const Vector		&getInitialPos() const noexcept;
 		const std::vector<Button>	&getButtons() const noexcept;
+		unsigned short		getInitialNbrButtons() const noexcept;
 		// Setter
 		void		setARenderer(ARenderer *renderer)
 				noexcept;
@@ -47,12 +48,14 @@ namespace Engine {
 		void		addButton(const Button &button) noexcept;
 		void		addButton(const Rect &buttonPositon, const
 				ButtonRequest &buttonRequest) noexcept;
+		void		setBackInitialButtons() noexcept;
 	protected:
 		ARenderer		*_renderer = nullptr;
 		Transform		_transform;
 		bool			_scrollable;
 		std::vector<Button>	_buttons;
 		int			_buttonPos = 0;
+		unsigned short		_initialNbrButtons = 0;
 		Vector			_initialPos;
 	private:
 		virtual void	initButtons() noexcept = 0;

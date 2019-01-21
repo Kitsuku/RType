@@ -32,7 +32,7 @@ namespace Engine {
 		unsigned int	_maxLife;
 		unsigned int	_life;
 		unsigned int	_damages;
-		float	_speed = 1.0;
+		float	_speed = 0.5;
 		bool	_alive = true;
 		bool	_isDeletable = true;
 		bool	_isDamageable = true;

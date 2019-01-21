@@ -10,8 +10,8 @@
 
 using Engine::ChannelScreen;
 
-ChannelScreen::ChannelScreen(const Engine::Transform &transform, const bool scrollable):
-ASceneScreen(transform, scrollable)
+ChannelScreen::ChannelScreen(const Engine::Transform &transform,
+const bool scrollable): ASceneScreen(transform, scrollable)
 {
 	initButtons();
 }
@@ -31,9 +31,10 @@ ChannelScreen::~ChannelScreen()
 void	ChannelScreen::initButtons() noexcept
 {
 	_buttons.push_back(Engine::Button({230, 935, 182, 35},
-	{"back", &MasterClient::back, true}));
+	{"back", &MasterClient::back, true, 0}));
 	_buttons.push_back(Engine::Button({530, 935, 192, 38},
-	{"joinLobby", &MasterClient::joinLobby, true}));
-	_buttons.push_back(Engine::Button({245, 590, 220, 50},
-	{"refreshLobby", &MasterClient::refreshLobby, true}));
+	{"joinLobby", &MasterClient::joinLobby, true, 1}));
+	_buttons.push_back(Engine::Button({530, 885, 192, 38},
+	{"refreshLobby", &MasterClient::refreshLobby, true, 2}));
+	_initialNbrButtons = 3;
 }

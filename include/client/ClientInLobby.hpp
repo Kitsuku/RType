@@ -1,3 +1,10 @@
+//
+// EPITECH PROJECT, 2019
+// RType
+// File description:
+// ClientInLobby class declaration
+//
+
 #ifndef CLIENT_IN_LOBBY_HPP_
     # define CLIENT_IN_LOBBY_HPP_
 

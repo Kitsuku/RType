@@ -22,6 +22,7 @@ namespace Engine {
 		IBrain		*brain;
 		std::string	path;
 		Rect		rectangle;
+		bool		colliding = true;
 		PreComponent	*bullet = nullptr;
 	};
 }

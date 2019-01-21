@@ -1,3 +1,10 @@
+//
+// EPITECH PROJECT, 2019
+// RType
+// File description:
+// LobbyClient class declaration
+//
+
 #ifndef LOBBYCLIENT_HPP_
     # define LOBBYCLIENT_HPP_
 
@@ -18,11 +25,12 @@
         void    addClient(int);
         void    addClient(int, bool);
         std::vector<ClientInLobby>  getClients() const;
-
+        const LobbyClient	&operator=(const LobbyClient
+					    &LobbyClient) noexcept;
         private:
         std::string _name;
-        int _level;
         int _clientsNb;
+        int _level;
         int _maxPlace;
         std::vector<ClientInLobby>    _clients;
     };

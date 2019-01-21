@@ -15,6 +15,11 @@ Transform::Transform()
 {
 }
 
+Transform::Transform(std::ifstream &stream)
+: _position(stream), _rotation(stream), _scale(stream)
+{
+}
+
 Transform::Transform(const Engine::Vector &pos, const Engine::Vector &rota,
 const Engine::Vector &scale)
 : _position(pos), _rotation(rota), _scale(scale)
@@ -25,8 +30,6 @@ Transform::~Transform()
 {
 }
 
-// Operatpr
-// Setter
 // Getter
 const Engine::Vector	&Transform::getPosition() const noexcept
 {
@@ -57,6 +60,13 @@ void	Transform::rotate(const Engine::Vector &rotation) noexcept
 void	Transform::place(const Engine::Vector &position) noexcept
 {
 	_position = position;
+}
+
+void	Transform::serialize(std::ostream &stream) const noexcept
+{
+	_position.serialize(stream);
+	_rotation.serialize(stream);
+	_scale.serialize(stream);
 }
 
 // Extern operator

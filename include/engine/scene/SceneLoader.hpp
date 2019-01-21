@@ -27,20 +27,23 @@ namespace Engine {
 		// Ctor & Dtor
 		SceneLoader(GameEngine &engine);
 		~SceneLoader() = default;
-		// Operator
-		// Setter
 		// Getter
 		bool	isReading() const noexcept;
 		// Method
-		void	loadFromFile(const std::string &path);
+		void	createByApparition(unsigned int id,
+					const SceneApparition::SceneActor &actor);
+		void	loadFromFile(const std::string &path) noexcept;
+		void	loadFromHeader(std::istream &stream) noexcept;
+		void	serializeHeader(std::ostream &stream) noexcept;
 		void	start() noexcept;
 		void	stop() noexcept;
 		void	doAction();
 	private:
 		// Private method
-		void	applyFirst();
-		void	applyAction();
-		void	addComponent();
+		void		applyFirst();
+		void		applyAction();
+		void		addComponent();
+		IComponent	*createComponent();
 		// Attribut
 		GameEngine	&_engine;
 		ActorLoader	_loader;
