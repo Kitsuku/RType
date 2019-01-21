@@ -14,6 +14,7 @@
 
 #include "UdpClient.hpp"
 #include "LobbyClient.hpp"
+#include "msleep.h"
 
 using boost::asio::ip::udp;
 using boost::asio::deadline_timer;
@@ -106,7 +107,7 @@ void    UdpClient::startWrite()
 
     if (firstWrite == true) {
         firstWrite = false;
-        sleep(1);
+        msleep(1);
     }
     if (_isConnected == false)
         return;
@@ -116,7 +117,7 @@ void    UdpClient::startWrite()
             _sendMessage += "\n";
         }
         try {
-            //std::cout << "ici j'envoie " << _sendMessage;
+            std::cout << "ici j'envoie " << _sendMessage;
             _socket.send_to(boost::asio::buffer(_sendMessage), _serverEndpoint);
             if (_inGame == true) {
                 _socket.send_to(boost::asio::buffer("0\n"), _serverEndpoint);
@@ -127,7 +128,7 @@ void    UdpClient::startWrite()
         }
     }
     if (_inGame != true)
-        sleep(0.3);
+        msleep(0.3);
     startWrite();
 }
 
@@ -167,7 +168,7 @@ void    UdpClient::handleReceive(const boost::system::error_code& error, size_t 
 
     if (temp.find("GAME START") != temp.npos) {
         std::cout << "Wollah je dors" << std::endl;
-        sleep(1);
+        msleep(1);
     }
     //std::cout << "Received: '" << _receiveMessage.data() << "' (" << error.message() << ")\n";
     if (_firstMessage == true) {
@@ -243,6 +244,7 @@ void    UdpClient::manageMyLobby()
 void    UdpClient::defineAction()
 {
     getline(std::cin, _sendMessage);
+    std::cout << "j'envoie " << _sendMessage << std::endl;
     startWrite();
 }
 

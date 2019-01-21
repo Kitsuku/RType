@@ -21,7 +21,7 @@ const ButtonRequest	&Button::getRequest() const noexcept
 	return _request;
 }
 // Method
-bool	Button::isPressed(const Vector &clickPos) const noexcept
+bool	Button::isPressed(const Engine::Vector &clickPos) const noexcept
 {
 	const unsigned int posX = static_cast<const unsigned int>
 	(clickPos.getX());

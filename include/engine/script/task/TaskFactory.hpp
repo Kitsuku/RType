@@ -9,6 +9,7 @@
 	#define TASKFACTORY_HPP_
 
 	#include <memory>
+	#include <array>
 
 namespace Engine {
 	class TaskFactory;

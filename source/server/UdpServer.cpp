@@ -18,6 +18,7 @@
 #include "IComponent.hpp"
 #include "Translater.hpp"
 #include "ColliderStatic.hpp"
+#include "msleep.h"
 
 using boost::asio::ip::udp;
 
@@ -43,9 +44,9 @@ const udp::endpoint	UdpServer::getEndpoint() const
 	return _remoteEndpoint;
 }
 
-const char	*UdpServer::getBuffer() const
+const std::string	UdpServer::getBuffer() const
 {
-	return _buffer;
+	return _buffer.data();
 }
 
 const std::map<udp::endpoint, Client>	UdpServer::getClients() const
@@ -124,9 +125,16 @@ void	UdpServer::setLock(std::string action)
 
 void	UdpServer::startReceive()
 {
-	_socket.async_receive_from(boost::asio::buffer(_buffer), _remoteEndpoint,
+
+    std::cout << "Debut startReceive" << std::endl;
+	_socket.async_receive_from(boost::asio::buffer(_buffer, BUFFSIZE), _remoteEndpoint,
 	[this] (const boost::system::error_code &error, std::size_t bytesTransferred) {
-		_buffer[bytesTransferred - 1] = 0;
+	    std::cout << "Debut de la lambda" << std::endl;
+	    if (_buffer[bytesTransferred - 1] == '\n')
+	    	_buffer[bytesTransferred - 1] = 0;
+	    else
+	    	_buffer[bytesTransferred] = 0;
+	    std::cout << "buffer = " << _buffer.data();
 		if (!error || error == boost::asio::error::message_size)
 			ClientManager manager(this, bytesTransferred);
 
@@ -153,7 +161,7 @@ void	UdpServer::startReceive()
 		std::cout << std::endl << std::endl;
 
 		// Fin print
-
+		std::cout << "fin de la lambda" << std::endl;
 		startReceive();
 	});
 }
@@ -198,7 +206,7 @@ void	UdpServer::catchPlayerMovement()
 	_gameSocket.async_receive_from(boost::asio::buffer(_gameBuffer), _gameRemoteEndpoint,
 		[this] (const boost::system::error_code &code, std::size_t bytesTransferred) {
 			_gameBuffer[bytesTransferred - 1] = 0;
-			std::cout << "gameBuffer = " << _gameBuffer << std::endl;
+			//std::cout << "gameBuffer = " << _gameBuffer << std::endl;
 			if (!code && bytesTransferred > 0) {
 				_gameLock.lock();
 				if (_clients.find(_gameRemoteEndpoint) == _clients.end())
@@ -215,7 +223,7 @@ void	UdpServer::moveComponents()
 
 	while (true) {
 		for (unsigned int it = 0; it < _games.size(); it++) {
-			sleep(1);
+			msleep(1);
 			/*std::ostringstream stream;
 			std::cout << "avant translate" << std::endl;
 			//_games.at(it).translate(stream);
@@ -283,7 +291,8 @@ Game	*UdpServer::getClientGame(Client client) noexcept
 void	UdpServer::clientNewEndpoint() noexcept
 {
 	if (_gameBuffer[0] != 0) {
-		int	clientId = std::stoi(_gameBuffer);
+		std::string	buffer = _gameBuffer.data();
+		int	clientId = std::stoi(buffer);
 		std::map<udp::endpoint, Client>::iterator it;
 
 		for (it = _clients.begin(); it->second.getId() != clientId && 

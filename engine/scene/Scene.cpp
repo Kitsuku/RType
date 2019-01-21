@@ -106,7 +106,7 @@ Engine::ScriptObject	*Scene::readScript()
 
 void			Scene::addActor(unsigned int size)
 {
-	char	path[size + 1];
+	char	path[100];
 
 	_file.read(path, size);
 	path[size] = '\0';

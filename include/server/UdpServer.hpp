@@ -18,6 +18,7 @@
 	#include <thread>
 	#include <mutex>
 	#include <boost/asio.hpp>
+	#include <array>
 	#include "Client.hpp"
 	#include "Lobby.hpp"
 	#include "Game.hpp"
@@ -31,7 +32,7 @@
 		void	setLock(std::string);
 
 		const udp::endpoint	getEndpoint() const;
-		const char	*getBuffer() const;
+		const std::string getBuffer() const;
 		const std::map<udp::endpoint, Client>	getClients() const;
 		const std::map<std::string, Lobby>	getLobbies() const;
 		const Client	getClient(udp::endpoint) const;
@@ -64,8 +65,8 @@
 
 		udp::endpoint	_remoteEndpoint;
 		udp::endpoint	_gameRemoteEndpoint;
-		char _buffer[BUFFSIZE];
-		char	_gameBuffer[BUFFSIZE];
+		std::array<char, BUFFSIZE> 	_buffer;
+		std::array<char, BUFFSIZE>	_gameBuffer;
 		std::map<udp::endpoint, Client>	_clients;
 		std::mutex	_lock;
 		std::mutex	_gameLock;

@@ -183,7 +183,7 @@ void		SfmlDisplay::drawBox(const Rect &box) noexcept
 }
 
 void		SfmlDisplay::drawText(const std::string &text,
-		const Vector &position, unsigned int size) noexcept
+		const Engine::Vector &position, unsigned int size) noexcept
 {
 	_sfText.setString(text);
 	_sfText.setCharacterSize(size);
@@ -209,7 +209,7 @@ void		SfmlDisplay::drawRect(const Rect &rect, const Color &color)
 	_window.draw(rectangle);
 }
 
-void		SfmlDisplay::drawCircle(const Vector &position,
+void		SfmlDisplay::drawCircle(const Engine::Vector &position,
 		const Color &color, float radius) noexcept
 {
 	sf::CircleShape	circle(radius);

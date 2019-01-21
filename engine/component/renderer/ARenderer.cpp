@@ -72,7 +72,7 @@ void		ARenderer::setMaxRepetition(const unsigned int maxRepetition)
 	_maxRepetition = maxRepetition;
 }
 
-void		ARenderer::setVectorMove(const Vector &vectorMove)
+void		ARenderer::setVectorMove(const Engine::Vector &vectorMove)
 		noexcept
 {
 	_vectorMove = vectorMove;

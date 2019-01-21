@@ -10,6 +10,7 @@
 #include "SfmlController.hpp"
 #include "ChannelScreen.hpp"
 #include "MenuScreen.hpp"
+#include "msleep.h"
 #include <string>
 
 // CTOR && DTOR
@@ -72,7 +73,7 @@ void	MasterClient::gameLoop() noexcept
 		inputKey = _screen.getControllerKey();
 		if (inputKey != '0') {
 			_udpClient.setSendMessage(std::to_string(inputKey));
-			sleep(0.3);
+			msleep(0.3);
 			_udpClient.setSendMessage("");
 		}
 		// faire un set message(inputKey);
@@ -120,7 +121,7 @@ void	MasterClient::exit() noexcept
 void	MasterClient::refreshLobby() noexcept
 {
 	_udpClient.setSendMessage("LOBBY INFO");
-	sleep(1);
+	msleep(1);
 	_udpClient.setSendMessage("");
 	displayScreen();
 	_screen.addLobbyButtons(_udpClient.getLobbies());
@@ -148,7 +149,7 @@ void	MasterClient::play() noexcept
 	}
 	//std::cout << "before Ready " << _udpClient.getReady() << std::endl;
 	_udpClient.setSendMessage("LOBBY READY");
-	sleep(1);
+	msleep(1);
 	_udpClient.setSendMessage("");
 	i = 0;
 	for (auto it = toto.begin(); it != toto.end(); it++) {
@@ -162,7 +163,7 @@ void	MasterClient::joinLobby() noexcept
 {
 	if (_selectedLobbyName.size() > 0) {
 		_udpClient.setSendMessage("LOBBY JOIN " + _selectedLobbyName);
-		sleep(1);
+		msleep(1);
 		_udpClient.setSendMessage("");
 		if (_udpClient.getInLobby()) {
 			_playerNbr =
@@ -199,7 +200,7 @@ void	MasterClient::validateCreation() noexcept
 	if (_gameNbr != 0 && _nbrPlayers != 0 && _lobbyName.size() != 0) {
 		_udpClient.setSendMessage("LOBBY NEW " + _lobbyName + " " +
 		std::to_string(_gameNbr) + " " + std::to_string(_nbrPlayers));
-		sleep(1);
+		msleep(1);
 		_udpClient.setSendMessage("");
 		if (_udpClient.getInLobby()) {
 			_playerNbr = 1;

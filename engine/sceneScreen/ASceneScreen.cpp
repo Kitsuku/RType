@@ -145,7 +145,7 @@ const ASceneScreen	&ASceneScreen::operator=(const Engine::ASceneScreen
 	return *this;
 }
 
-void		ASceneScreen::addButton(const Button &button) noexcept
+void		ASceneScreen::addButton(const Engine::Button &button) noexcept
 {
 	_buttons.push_back(button);
 }

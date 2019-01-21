@@ -91,7 +91,7 @@ char		Screen::getControllerKey() const noexcept
 	return _controller.convertKey(_inputKey);
 }
 
-bool		Screen::isButtonPressed(const Vector &clickPos) noexcept
+bool		Screen::isButtonPressed(const Engine::Vector &clickPos) noexcept
 {
 	const bool	ret = _sceneScreen.isPressed(clickPos);
 
@@ -99,7 +99,7 @@ bool		Screen::isButtonPressed(const Vector &clickPos) noexcept
 	return ret;
 }
 
-void		Screen::addButton(const Button &button) noexcept
+void		Screen::addButton(const Engine::Button &button) noexcept
 {
 	_sceneScreen.addButton(button);
 }
@@ -137,7 +137,7 @@ void		Screen::addLobbyButtons(std::map<std::string,
 	}
 }
 
-void		Screen::setButtons(std::vector<Button> buttons)
+void		Screen::setButtons(std::vector<Engine::Button> buttons)
 		noexcept
 {
 	_sceneScreen.setButtons(buttons);
@@ -163,7 +163,7 @@ Engine::ARenderer	*Screen::createRenderer(
 
 Engine::ARenderer	*Screen::createRenderer(
 			const std::string &ressourcesPath,
-			const Rect &spriteRectangle, const Vector &moveRect)
+			const Rect &spriteRectangle, const Engine::Vector &moveRect)
 			const noexcept
 {
 	return _displayer.createRenderer(ressourcesPath, spriteRectangle,
@@ -172,7 +172,7 @@ Engine::ARenderer	*Screen::createRenderer(
 
 Engine::ARenderer	*Screen::createRenderer(
 			const std::string &ressourcesPath,
-			const Rect &spriteRectangle, const Vector &moveRect,
+			const Rect &spriteRectangle, const Engine::Vector &moveRect,
 			const unsigned int maxRepetition) const noexcept
 {
 	return _displayer.createRenderer(ressourcesPath, spriteRectangle,
@@ -225,7 +225,7 @@ void		Screen::drawLobbyInfo(const LobbyClient &lobby,
 }
 
 void		Screen::drawText(const std::string &text,
-		const Vector &position, unsigned int size) noexcept
+		const Engine::Vector &position, unsigned int size) noexcept
 {
 	_displayer.drawText(text, position, size);
 }
@@ -235,7 +235,7 @@ void		Screen::drawRect(const Rect &rect, const Color &color) noexcept
 	_displayer.drawRect(rect, color);
 }
 
-void		Screen::drawCircle(const Vector &position,
+void		Screen::drawCircle(const Engine::Vector &position,
 		const Color &color, float radius) noexcept
 {
 	_displayer.drawCircle(position, color, radius);
