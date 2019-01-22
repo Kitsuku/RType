@@ -30,6 +30,7 @@ UdpClient::UdpClient(std::string host, std::string port, boost::asio::io_service
 
 void    UdpClient::setSendMessage(const std::string message) noexcept
 {
+    std::cout << "dans setSendMessage, msg = " << message << std::endl;
     _sendMessage = message;
 }
 
@@ -105,13 +106,17 @@ void    UdpClient::startWrite()
 {
     static  bool    firstWrite = true;
 
+    std::cout << "dans startWrite" << std::endl;
     if (firstWrite == true) {
         firstWrite = false;
         msleep(1);
     }
     if (_isConnected == false)
         return;
-    while (_sendMessage.empty() == true);
+    std::cout << "boucle tant que message vide" << std::endl;
+    while (_sendMessage.empty() == true)
+        msleep(10);
+    std::cout << "message plus enmpty" << std::endl;
     if (_sendMessage != "") {
         if (_sendMessage.find("\n") == std::string::npos) {
             _sendMessage += "\n";
@@ -128,7 +133,8 @@ void    UdpClient::startWrite()
         }
     }
     if (_inGame != true)
-        msleep(0.3);
+        msleep(3);
+    _sendMessage = "";
     startWrite();
 }
 

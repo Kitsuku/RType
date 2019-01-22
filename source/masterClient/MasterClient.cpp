@@ -73,8 +73,8 @@ void	MasterClient::gameLoop() noexcept
 		inputKey = _screen.getControllerKey();
 		if (inputKey != '0') {
 			_udpClient.setSendMessage(std::to_string(inputKey));
-			msleep(0.3);
-			_udpClient.setSendMessage("");
+			msleep(10);
+			//_udpClient.setSendMessage("");
 		}
 		// faire un set message(inputKey);
 		key = _screen.getInputKey();
@@ -121,8 +121,8 @@ void	MasterClient::exit() noexcept
 void	MasterClient::refreshLobby() noexcept
 {
 	_udpClient.setSendMessage("LOBBY INFO");
-	msleep(1);
-	_udpClient.setSendMessage("");
+	msleep(1000);
+	//_udpClient.setSendMessage("");
 	displayScreen();
 	_screen.addLobbyButtons(_udpClient.getLobbies());
 	_refreshTimer = 0;
@@ -149,8 +149,8 @@ void	MasterClient::play() noexcept
 	}
 	//std::cout << "before Ready " << _udpClient.getReady() << std::endl;
 	_udpClient.setSendMessage("LOBBY READY");
-	msleep(1);
-	_udpClient.setSendMessage("");
+	msleep(1000);
+	//_udpClient.setSendMessage("");
 	i = 0;
 	for (auto it = toto.begin(); it != toto.end(); it++) {
 		std::cout << "after Ready " << i << " : " << it->isReady() << std::endl;
@@ -163,8 +163,8 @@ void	MasterClient::joinLobby() noexcept
 {
 	if (_selectedLobbyName.size() > 0) {
 		_udpClient.setSendMessage("LOBBY JOIN " + _selectedLobbyName);
-		msleep(1);
-		_udpClient.setSendMessage("");
+		msleep(1000);
+		//_udpClient.setSendMessage("");
 		if (_udpClient.getInLobby()) {
 			_playerNbr =
 			_udpClient.getLobbyClient().getNbClients() + 1;
@@ -197,11 +197,13 @@ void	MasterClient::setGameNbr() noexcept
 void	MasterClient::validateCreation() noexcept
 {
 	// call to serv
+	std::cout << "dans validate Creation" << std::endl;
 	if (_gameNbr != 0 && _nbrPlayers != 0 && _lobbyName.size() != 0) {
 		_udpClient.setSendMessage("LOBBY NEW " + _lobbyName + " " +
 		std::to_string(_gameNbr) + " " + std::to_string(_nbrPlayers));
-		msleep(1);
-		_udpClient.setSendMessage("");
+		std::cout << "Je suis censé send LOBBY NEW " << _lobbyName << " " << std::to_string(_gameNbr) << " " << std::to_string(_nbrPlayers) << std::endl;
+		msleep(1000);
+		//_udpClient.setSendMessage("");
 		if (_udpClient.getInLobby()) {
 			_playerNbr = 1;
 			_selectedLobbyName = _lobbyName;
