@@ -126,15 +126,13 @@ void	UdpServer::setLock(std::string action)
 void	UdpServer::startReceive()
 {
 
-    std::cout << "Debut startReceive" << std::endl;
 	_socket.async_receive_from(boost::asio::buffer(_buffer, BUFFSIZE), _remoteEndpoint,
 	[this] (const boost::system::error_code &error, std::size_t bytesTransferred) {
-	    std::cout << "Debut de la lambda" << std::endl;
 	    if (_buffer[bytesTransferred - 1] == '\n')
 	    	_buffer[bytesTransferred - 1] = 0;
-	    else
+	    else {
 	    	_buffer[bytesTransferred] = 0;
-	    std::cout << "buffer = " << _buffer.data();
+		}
 		if (!error || error == boost::asio::error::message_size)
 			ClientManager manager(this, bytesTransferred);
 
@@ -161,7 +159,6 @@ void	UdpServer::startReceive()
 		std::cout << std::endl << std::endl;
 
 		// Fin print
-		std::cout << "fin de la lambda" << std::endl;
 		startReceive();
 	});
 }
@@ -206,7 +203,6 @@ void	UdpServer::catchPlayerMovement()
 	_gameSocket.async_receive_from(boost::asio::buffer(_gameBuffer), _gameRemoteEndpoint,
 		[this] (const boost::system::error_code &code, std::size_t bytesTransferred) {
 			_gameBuffer[bytesTransferred - 1] = 0;
-			//std::cout << "gameBuffer = " << _gameBuffer << std::endl;
 			if (!code && bytesTransferred > 0) {
 				_gameLock.lock();
 				if (_clients.find(_gameRemoteEndpoint) == _clients.end())
@@ -250,11 +246,9 @@ void	UdpServer::addGame()
 	//game.launchGame("level00.scn");
 	_games.push_back(std::move(game));
 	_lobbies.erase(clientLobby.getName());
-	//std::cout << "befooooore" << std::endl;
 	//_gameEngine.setBoundingBox(box);
 	//_gameEngine.open();
 	//_gameEngine.playScene("level00.scn", EngineDura(0.1));
-	//std::cout << "aftereererere" << std::endl;
 }
 
 void	UdpServer::deleteLobby(std::string name)
@@ -267,7 +261,6 @@ void    UdpServer::sendMessageInGame(std::string information, unsigned int gameN
 	const std::vector<Client>	clients = _games.at(gameNb).getClients();
 
 	for (unsigned int itC = 0; itC < clients.size(); itC++) {
-		std::cout << "envoie d'un message au client id = " << clients.at(itC).getId() << std::endl;
 		_gameSocket.async_send_to(boost::asio::buffer(information), clients.at(itC).getEndpoint(),
 		[information] (const boost::system::error_code &error, std::size_t bytesTransferred) {
 			if (!error || bytesTransferred == 0)

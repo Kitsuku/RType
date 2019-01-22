@@ -38,9 +38,7 @@ int LobbyClient::getMaxPlace() const
 #include <iostream>
 void    LobbyClient::changeClientStatus(int clientId)
 {
-    std::cout << "here 1" << std::endl;
     for (unsigned int it = 0; it < _clients.size(); it++) {
-        std::cout << "here 2" << std::endl;
         if (_clients.at(it).getId() == clientId)
             _clients.at(it).changeStatus();
     }

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(RType)
 
 IF (WIN32)
-	include(cmake-build-debug/conanbuildinfo.cmake)
+	include(cmake-build-release/conanbuildinfo.cmake)
 	conan_basic_setup()
 ELSE (WIN32)
 	include(build/conanbuildinfo.cmake)
@@ -31,6 +31,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/engine
 
 IF(WIN32)
 	include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/windows)
+ELSE (WIN32)
+	set(CMAKE_CXX_FLAGS "-ldl -W -Wall -Wextra")
 ENDIF(WIN32)
 
 IF(WIN32)

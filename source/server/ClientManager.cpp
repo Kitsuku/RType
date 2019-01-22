@@ -59,7 +59,6 @@ udp::endpoint   ClientManager::getEndpoint()
 
 bool    ClientManager::isLobbyCommand()
 {
-    std::cout << "dans lobbyCommand" << std::endl;
     if (_clientMessage.find("LOBBY") == _clientMessage.npos) {
         _udpServer->_socket.async_send_to(boost::asio::buffer("UNKNOWN COMMAND\n"), _clientEndpoint,
         [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
@@ -73,21 +72,12 @@ bool    ClientManager::isLobbyCommand()
 
 void    ClientManager::manageLobbies()
 {
-    std::cout << "dans manage lobbies" << std::endl;
     if (isLobbyCommand() == true) {
         std::size_t pos = _clientMessage.npos;
         unsigned int it;
 
-        std::cout << "commandLobby = true et clientMessage = " << _clientMessage << "totototo" << std::endl;
-        std::cout << "clientmmsg npos = " << _clientMessage.npos << std::endl;
         for (it = 0; it < 4 && pos == _clientMessage.npos; it++)
             pos = _clientMessage.find(_lobbyCommands[it]);
-        if (pos == _clientMessage.npos)
-            std::cout << "pos = npos" << std::endl;
-        else
-            std::cout << "pos != npos" << std::endl;
-        std::cout << "pos = " << pos << std::endl;
-        std::cout << "apres for" << std::endl;
         if (pos == std::string::npos)
             _udpServer->_socket.async_send_to(boost::asio::buffer("UNKNOWN COMMAND\n"), _clientEndpoint,
             [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
@@ -95,9 +85,7 @@ void    ClientManager::manageLobbies()
                     std::cerr << "Error when sending a message to client (addClient)" << std::endl;
             });
         else {
-            std::cout << "dans le else it = " << it << std::endl;
             ((*this).*_lobbyFunctions.at(it - 1))();
-            std::cout << "fin else" << std::endl;
         }
     }
 }
@@ -255,8 +243,6 @@ void    ClientManager::sendMessageInLobby(std::string information)
 
     for (unsigned int it = 0; it < clients.size(); it++) {
         if (clients.at(it).getEndpoint() != _clientEndpoint) {
-            std::cout << "Envoie d'un message au client " << it << " du lobby " << lobby.getName() 
-                    << "le message est: " << information << ")";
             _udpServer->_socket.async_send_to(boost::asio::buffer(message), clients.at(it).getEndpoint(),
             [] (const boost::system::error_code &error, std::size_t bytesTransferred) {
                 if (error || bytesTransferred == 0)

@@ -54,7 +54,6 @@ void			Launcher::launch()
 	std::thread runClient([&io] {
 		io.run();
 	});
-	std::cout << "instantiateMaster : " << std::endl;
 	instantiateMaster(screen, udpClient, gameEngine);
 	runClient.join();
 }

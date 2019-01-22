@@ -12,6 +12,7 @@
 #include "MenuScreen.hpp"
 #include "msleep.h"
 #include <string>
+#include <iostream>
 
 // CTOR && DTOR
 MasterClient::MasterClient(const std::string &path, Engine::Screen &screen,
@@ -22,7 +23,7 @@ _sceneScreens(sceneScreens)
 {
 	changeSceneScreen(1);
 }
-#include <iostream>
+
 void	MasterClient::test() noexcept
 {
 	std::cout << "success call to masterClient Test" << std::endl;
@@ -79,10 +80,6 @@ void	MasterClient::gameLoop() noexcept
 		// faire un set message(inputKey);
 		key = _screen.getInputKey();
 		displayCreateLobbyName(key);
-		if (clickpos.getX() != 0 && clickpos.getY() != 0) {
-			std::cout << "x : " << clickpos.getX() << " and y : "
-			<< clickpos.getY() << std::endl;
-		}
 		pressButton(clickpos);
 		++_refreshTimer;
 		if (!_inGame) {
@@ -101,7 +98,6 @@ void	MasterClient::goToCreateGame() noexcept
 	_nbrPlayers = 0;
 	_gameNbr = 0;
 	changeSceneScreen(3);
-	std::cout << "createGame" << std::endl;
 }
 
 void	MasterClient::goToJoinGame() noexcept
@@ -109,12 +105,10 @@ void	MasterClient::goToJoinGame() noexcept
 	changeSceneScreen(2);
 	refreshLobby();
 	_selectedLobbyName = "";
-	std::cout << "joinGame" << std::endl;
 }
 
 void	MasterClient::exit() noexcept
 {
-	std::cout << "exit" << std::endl;
 	_screen.closeWindow();
 }
 
@@ -144,19 +138,14 @@ void	MasterClient::play() noexcept
 	std::vector <ClientInLobby> toto = _udpClient.getLobbyClient().getClients();
 	int i = 0;
 	for (auto it = toto.begin(); it != toto.end(); it++) {
-		std::cout << "before Ready " << i << " : " << it->isReady() << std::endl;
 		i++;
 	}
-	//std::cout << "before Ready " << _udpClient.getReady() << std::endl;
 	_udpClient.setSendMessage("LOBBY READY");
 	msleep(1000);
-	//_udpClient.setSendMessage("");
 	i = 0;
 	for (auto it = toto.begin(); it != toto.end(); it++) {
-		std::cout << "after Ready " << i << " : " << it->isReady() << std::endl;
 		i++;
 	}
-	std::cout << "after Ready " << _udpClient.getReady() << std::endl;
 }
 
 void	MasterClient::joinLobby() noexcept
@@ -164,7 +153,6 @@ void	MasterClient::joinLobby() noexcept
 	if (_selectedLobbyName.size() > 0) {
 		_udpClient.setSendMessage("LOBBY JOIN " + _selectedLobbyName);
 		msleep(1000);
-		//_udpClient.setSendMessage("");
 		if (_udpClient.getInLobby()) {
 			_playerNbr =
 			_udpClient.getLobbyClient().getNbClients() + 1;
@@ -175,7 +163,6 @@ void	MasterClient::joinLobby() noexcept
 
 void	MasterClient::selectLobby() noexcept
 {
-	std::cout << "_buttonName : " << _buttonNameClicked << std::endl;
 	_selectedLobbyName = _buttonNameClicked;
 	displaySelectJoinLobby();
 }
@@ -183,27 +170,22 @@ void	MasterClient::selectLobby() noexcept
 void	MasterClient::setNbrPlayers() noexcept
 {
 	_nbrPlayers = std::stoi(_buttonNameClicked);
-	std::cout << "_nbrPlayers : " << _nbrPlayers << std::endl;
 	displaySelectionCreateLobby();
 }
 
 void	MasterClient::setGameNbr() noexcept
 {
 	_gameNbr = std::stoi(_buttonNameClicked);
-	std::cout << "_gameNbr : " << _gameNbr << std::endl;
 	displaySelectionCreateLobby();
 }
 
 void	MasterClient::validateCreation() noexcept
 {
 	// call to serv
-	std::cout << "dans validate Creation" << std::endl;
 	if (_gameNbr != 0 && _nbrPlayers != 0 && _lobbyName.size() != 0) {
 		_udpClient.setSendMessage("LOBBY NEW " + _lobbyName + " " +
 		std::to_string(_gameNbr) + " " + std::to_string(_nbrPlayers));
-		std::cout << "Je suis censé send LOBBY NEW " << _lobbyName << " " << std::to_string(_gameNbr) << " " << std::to_string(_nbrPlayers) << std::endl;
 		msleep(1000);
-		//_udpClient.setSendMessage("");
 		if (_udpClient.getInLobby()) {
 			_playerNbr = 1;
 			_selectedLobbyName = _lobbyName;

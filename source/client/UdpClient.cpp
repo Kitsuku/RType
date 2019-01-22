@@ -30,7 +30,6 @@ UdpClient::UdpClient(std::string host, std::string port, boost::asio::io_service
 
 void    UdpClient::setSendMessage(const std::string message) noexcept
 {
-    std::cout << "dans setSendMessage, msg = " << message << std::endl;
     _sendMessage = message;
 }
 
@@ -52,7 +51,6 @@ bool    UdpClient::getReady() noexcept
 void    UdpClient::start(udp::resolver::iterator endpointIt)
 {
     if (_socket.is_open() == false) {
-        std::cout << "on ouvre la socket" << std::endl;
         _socket.open(udp::v4());
         _socket.non_blocking(true);
         _socket.native_non_blocking(true);
@@ -106,23 +104,19 @@ void    UdpClient::startWrite()
 {
     static  bool    firstWrite = true;
 
-    std::cout << "dans startWrite" << std::endl;
     if (firstWrite == true) {
         firstWrite = false;
         msleep(1);
     }
     if (_isConnected == false)
         return;
-    std::cout << "boucle tant que message vide" << std::endl;
     while (_sendMessage.empty() == true)
         msleep(10);
-    std::cout << "message plus enmpty" << std::endl;
     if (_sendMessage != "") {
         if (_sendMessage.find("\n") == std::string::npos) {
             _sendMessage += "\n";
         }
         try {
-            std::cout << "ici j'envoie " << _sendMessage;
             _socket.send_to(boost::asio::buffer(_sendMessage), _serverEndpoint);
             if (_inGame == true) {
                 _socket.send_to(boost::asio::buffer("0\n"), _serverEndpoint);
@@ -138,26 +132,8 @@ void    UdpClient::startWrite()
     startWrite();
 }
 
-/*void    UdpClient::startWrite()
-{
-    if (_sendMessage != "") {
-        _sendMessage += "\n";
-        std::cout << "Le message est " << _sendMessage;
-        _socket.send_to(boost::asio::buffer(_sendMessage), _serverEndpoint);
-    }
-    if (_isReading != true) {
-        _isReading = true;
-        std::thread clientRead([this] {
-            this->startRead();
-        });
-        clientRead.detach();
-    }
-    startWrite();
-}*/
-
 void    UdpClient::startRead()
 {
-    //std::cout << "en attente de quelque chose à read" << std::endl;
     _socket.async_receive_from(boost::asio::buffer(_receiveMessage), _serverEndpoint,
     boost::bind(&UdpClient::handleReceive, this, boost::asio::placeholders::error,
     boost::asio::placeholders::bytes_transferred));
@@ -173,10 +149,8 @@ void    UdpClient::handleReceive(const boost::system::error_code& error, size_t 
     std::string temp = _receiveMessage.data();
 
     if (temp.find("GAME START") != temp.npos) {
-        std::cout << "Wollah je dors" << std::endl;
         msleep(1);
     }
-    //std::cout << "Received: '" << _receiveMessage.data() << "' (" << error.message() << ")\n";
     if (_firstMessage == true) {
         getMyId();
         _firstMessage = false;
@@ -208,8 +182,6 @@ void    UdpClient::manageReceiveMessage()
 {
     std::string message = _receiveMessage.data();
 
-    std::cout << "message = " << message << std::endl;
-    //std::cout << "here 5 : " << message << std::endl;
     if (message.find("LOBBY") != message.npos) {
         manageMyLobby();
         startRead();
@@ -224,7 +196,6 @@ void    UdpClient::manageReceiveMessage()
         _inGame = true;
         udp::resolver resolver(_io);
         _socket = udp::socket(_io);
-        std::cout << "Je dois start la game" << std::endl;
         start(resolver.resolve(udp::resolver::query(udp::v4(), _host, std::to_string(14))));
     }
     startRead();
@@ -250,7 +221,6 @@ void    UdpClient::manageMyLobby()
 void    UdpClient::defineAction()
 {
     getline(std::cin, _sendMessage);
-    std::cout << "j'envoie " << _sendMessage << std::endl;
     startWrite();
 }
 

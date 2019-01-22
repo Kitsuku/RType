@@ -35,10 +35,9 @@ int ClientInLobby::getId() const
 {
     return _id;
 }
-#include <iostream>
+
 void    ClientInLobby::changeStatus()
 {
-    std::cout << "in change Status" << std::endl;
     if (_ready == true)
         _ready = false;
     else
